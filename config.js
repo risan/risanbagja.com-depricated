@@ -5,17 +5,18 @@ module.exports = {
   destinationPath: path.resolve(__dirname, 'public'),
   layoutsDir: 'layouts',
   defaultLayout: 'default',
-  siteDescription: 'Risan Bagja Pradana is an experienced Javascript and PHP developer',
-
   copyableFiles: ['.ico', '.html', 'robot.txt'],
 
-  source: {
-    path: path.resolve(__dirname, 'src'),
-    layoutDir: 'layouts',
-    postsDir: 'posts'
-  },
-  destination: {
-    path: path.resolve(__dirname, 'public'),
-    postsDir: 'blog'
+  url: 'http://localhost:8000',
+  siteDescription: 'Risan Bagja Pradana is an experienced Javascript and PHP developer',
+
+  posts: {
+    sourceDir: 'posts',
+    destinationDir: 'blog',
+    defaultLayout: 'post',
+    pagination: {
+      perPage: 4,
+      path: 'page:num.html'
+    }
   }
 };

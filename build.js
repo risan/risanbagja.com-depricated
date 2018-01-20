@@ -1,22 +1,53 @@
 const path = require('path');
+const chokidar = require('chokidar');
 const config = require('./config');
-const copyFile = require('./generators/utils/copy-file');
-const getProcessableFiles = require('./generators/get-processable-files');
-const MarkdownProcessor = require('./generators/markdown-processor');
+const generate = require('./generators/generate');
 
-const markdownProcessor = new MarkdownProcessor({
-  defaultLayout: config.defaultLayout,
-  layoutsPath: path.join(config.sourcePath, config.layoutsDir)
-});
+const enableWatch = process.argv.filter(arg => arg === '--watch').length > 0;
 
-getProcessableFiles({ ...config })
-  .then(({ markdownFiles, copyableFiles }) => {
-    Promise.all(copyableFiles.map(({ source, destination }) => copyFile(source, destination)))
-      .then(() => console.log('✅ Done copying files...'))
-      .catch(err => console.error(err));
+generate(config)
+  .then(() => {
+    console.log('🎉 Done generating static sites...');
 
-    Promise.all(markdownFiles.map(({ source, destination }) => markdownProcessor.process(source, destination, { config })))
-      .then(results => console.log(results))
-      .catch(err => console.error(err));
+    if (enableWatch) {
+      startWatcher();
+    }
   })
   .catch(err => console.error(err));
+
+const logChange = (type, path) => {
+  switch (type) {
+    case 'add':
+      return console.log(`🆕 File ${path} is added`);
+    case 'change':
+      return console.log(`🔧 File ${path} is changed`);
+    case 'unlink':
+      return console.log(`🔥 File ${path} is removed`);
+  }
+}
+
+const handleChange = (type, path) => {
+  logChange(type, path);
+
+  generate(config)
+    .then(() => console.log('🎉 Done regenerating static sites...'))
+    .catch(err => console.error(err));
+}
+
+const startWatcher = () => {
+  const watcher = chokidar.watch(config.sourcePath, {
+    ignored: [/(^|[\/\\])\../, path.join(config.sourcePath, 'assets')],
+    persistent: true
+  });
+
+  watcher
+    .on('ready', () => {
+      console.log('👀 Initial scan complete, watching for file changes...');
+      watcher.on('add', path => handleChange('add', path));
+    })
+    .on('change', path => handleChange('change', path))
+    .on('unlink', path => handleChange('unlink', path))
+    .on('error', error => console.error(error));
+
+  return watcher;
+};

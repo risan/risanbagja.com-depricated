@@ -1,10 +1,7 @@
-const fs = require('fs');
 const path = require('path');
-const util = require('util');
 const pug = require('pug');
+const fs = require('fs-extra');
 const parseMarkdown = require('./parse-markdown');
-
-const writeFile = util.promisify(fs.writeFile);
 
 class MarkdownProcessor {
   constructor({ defaultLayout, layoutsPath }) {
@@ -12,7 +9,13 @@ class MarkdownProcessor {
     this.layoutsPath = layoutsPath;
   }
 
-  process(source, destination, { defaultLayout = this.defaultLayout, ...viewData } = {}) {
+  static getExcerpt(content) {
+    const matchedFirstParagraph = content.match(/<p[^>]*>([\s\S]*?)<\/p>/);
+
+    return null === matchedFirstParagraph ? null : matchedFirstParagraph[1];
+  }
+
+  process(source, destination, { defaultLayout = this.defaultLayout, url = null, date = null, ...viewData } = {}) {
     return new Promise((resolve, reject) => {
       parseMarkdown(source)
         .then(({ attributes, content }) => {
@@ -22,11 +25,22 @@ class MarkdownProcessor {
             pretty: true
           });
 
-          const html = pugLayout({ ...attributes, content, ...viewData });
+          if (attributes.date) {
+            date = new Date(attributes.date);
+          }
 
-          writeFile(destination, html)
-            .then(() => resolve({ attributes, destination }))
-            .catch(err => reject(err));
+          if (!attributes) {
+            const excerpt = match(/<p[^>]*>(.+)<\/p>/);
+          }
+
+          const excerpt = attributes.excerpt ? attributes.excerpt :
+            MarkdownProcessor.getExcerpt(content);
+
+          const html = pugLayout({ ...attributes, excerpt, url, date, content, ...viewData });
+
+          fs.outputFile(destination, html)
+            .then(() => resolve({ ...attributes, excerpt, destination, url, date }))
+            .catch(err => reject(err))
         })
         .catch(err => reject(err));
     });
