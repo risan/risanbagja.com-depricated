@@ -11,6 +11,7 @@ body {
     flex-direction: column;
     align-items: center;
     font-size: $font-size-base;
+    line-height: 1.5;
     font-family: $font-family-sans-serif;
     margin: 0;
     color: $font-color;
@@ -37,7 +38,6 @@ a:active {
 // Button
 .btn {
     display: block;
-    font-size: 1rem;
     font-weight: 500;
     line-height: 1.2;
     text-decoration: none;
@@ -165,10 +165,10 @@ header {
     display: block;
     text-decoration: none;
 
-    &:link,
-    &:visited,
+    &:active,
     &:hover,
-    &:active {
+    &:link,
+    &:visited  {
         color: $font-color;
     }
 }
@@ -194,8 +194,6 @@ header {
 }
 
 .article-excerpt {
-    font-size: 1rem;
-    line-height: 1.5;
     margin: 0;
 }
 
@@ -215,8 +213,6 @@ header {
 }
 
 .footer-license {
-    font-size: 1rem;
-    line-height: 1.5;
     margin: 0 0 1rem 0;
 
     a:link,
@@ -233,103 +229,11 @@ header {
 .footer-menu {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     list-style-type: none;
-    margin: 0;
     padding: 0;
-
-    @media (min-width: $screen-sm-min) {
-        justify-content: left;
-    }
 }
 
 .footer-menu-item {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-right: 1.2rem;
-}
-
-.footer-menu-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: all .2s ease;
-
-    &:link,
-    &:visited {
-        color: $font-color;
-    }
-
-    &:hover,
-    &:active {
-        .footer-menu-icon {
-            transform: scale(1.15);
-        }
-    }
-}
-
-.footer-menu-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    fill: $font-color;
-    transition: all .4s ease;
-
-    @media (min-width: $screen-sm-min) {
-        width: 1rem;
-        height: 1rem;
-        margin-right: .25rem;
-    }
-}
-
-.footer-menu-label {
-    display: none;
-
-    @media (min-width: $screen-sm-min) {
-        display: block;
-    }
-}
-
-.github:hover,
-.github:active {
-    color: $github-color;
-
-    .footer-menu-icon {
-        fill: $github-color;
-    }
-}
-
-.stackoverflow:hover,
-.stackoverflow:active {
-    color: $stackoverflow-color;
-
-    .footer-menu-icon {
-        fill: $stackoverflow-color;
-    }
-}
-
-.medium:hover,
-.medium:active {
-    color: $medium-color;
-
-    .footer-menu-icon {
-        fill: $medium-color;
-    }
-}
-
-.twitter:hover,
-.twitter:active {
-    color: $twitter-color;
-
-    .footer-menu-icon {
-        fill: $twitter-color;
-    }
-}
-
-.gmail:hover,
-.gmail:active {
-    color: $gmail-color;
-
-    .footer-menu-icon {
-        fill: $gmail-color;
-    }
+    line-height: 1.75;
+    margin-right: 1.25rem;
 }

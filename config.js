@@ -34,7 +34,7 @@ module.exports = {
     sourceDir: 'assets',
     destinationDir: 'assets',
     entries: {
-      blog: 'scss/blog.scss'
+      'posts-index': 'scss/posts-index.scss'
     }
   }
 };

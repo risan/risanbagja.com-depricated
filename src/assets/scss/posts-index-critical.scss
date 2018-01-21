@@ -1,0 +1,158 @@
+@import 'variables';
+
+$max-container-width: 54rem;
+
+html {
+    font-size: $font-size-base;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: $font-size-base;
+    line-height: 1.5;
+    font-family: $font-family-sans-serif;
+    margin: 0;
+    color: $font-color;
+    background: $bg-color;
+}
+
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: $max-container-width;
+    padding: 0 1rem;
+}
+
+// Button
+.btn {
+    display: block;
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
+    padding: .5rem .75rem;
+    border: 1px solid $font-color;
+    box-shadow: 4px 4px 0 #000;
+    box-sizing: border-box;
+
+    &:link,
+    &:visited {
+        color: $font-color;
+        background: $btn-color;
+    }
+
+    &.btn-md {
+        font-size: .9rem;
+    }
+}
+
+// Header
+header {
+    margin: 2rem 0 1rem 0;
+}
+
+.header-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .1rem;
+    margin: 0 0 .5rem 0;
+
+    a {
+        text-decoration: none;
+
+        &:link,
+        &:visited {
+            color: $font-color;
+        }
+    }
+}
+
+.header-subtitle {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0;
+}
+
+// Nav
+.nav {
+    margin: 0 0 2rem 0;
+}
+
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu-item {
+    margin: 0 .75rem 0 0;
+}
+
+// Article List
+.article-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.article {
+    width: 100%;
+    margin: 0 0 2rem 0;
+
+    @media (min-width: $screen-sm-min) {
+        width: calc(50% - .5rem);
+
+        &:nth-child(odd) {
+            margin-right: .5rem;
+        }
+
+        &:nth-child(even) {
+            margin-left: .5rem;
+        }
+    }
+
+    @media (min-width: $screen-md-min) {
+        width: calc(50% - 1rem);
+
+        &:nth-child(odd) {
+            margin-right: 1rem;
+        }
+
+        &:nth-child(even) {
+            margin-left: 1rem;
+        }
+    }
+}
+
+.article-link {
+    display: block;
+    color: $font-color;
+    text-decoration: none;
+}
+
+.article-img {
+    height: 175px;
+    margin-bottom: .5rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-color: #8785A2;
+
+    @media (min-width: $screen-md-min) {
+        height: 200px;
+    }
+}
+
+.article-title {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin: 0 0 .5rem 0;
+}
+
+.article-excerpt {
+    margin: 0;
+}

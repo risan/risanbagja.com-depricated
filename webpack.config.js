@@ -63,7 +63,8 @@ const assetsConfig = {
 
 const criticalConfig = {
   entry: normalizedEntries({
-    'home-critical': 'scss/home-critical.scss'
+    'home-critical': 'scss/home-critical.scss',
+    'posts-index-critical': 'scss/posts-index-critical.scss'
   }),
   output: {
     path: path.join(config.sourcePath, config.layoutsDir, 'includes'),
@@ -84,7 +85,7 @@ const criticalConfig = {
     extractSass,
 
     new DeleteBuildFilesPlugin(
-      ['home-critical.js'],
+      ['home-critical.js', 'posts-index-critical.js'],
       path.join(config.sourcePath, config.layoutsDir, 'includes')
     )
   ]
