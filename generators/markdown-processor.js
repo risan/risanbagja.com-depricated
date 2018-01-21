@@ -9,13 +9,7 @@ class MarkdownProcessor {
     this.layoutsPath = layoutsPath;
   }
 
-  static getExcerpt(content) {
-    const matchedFirstParagraph = content.match(/<p[^>]*>([\s\S]*?)<\/p>/);
-
-    return null === matchedFirstParagraph ? null : matchedFirstParagraph[1];
-  }
-
-  process(source, destination, { defaultLayout = this.defaultLayout, url = null, date = null, ...viewData } = {}) {
+  process({ source, destination, url = null, defaultLayout = this.defaultLayout, viewData = {} }) {
     return new Promise((resolve, reject) => {
       parseMarkdown(source)
         .then(({ attributes, content }) => {
@@ -25,21 +19,10 @@ class MarkdownProcessor {
             pretty: true
           });
 
-          if (attributes.date) {
-            date = new Date(attributes.date);
-          }
-
-          if (!attributes) {
-            const excerpt = match(/<p[^>]*>(.+)<\/p>/);
-          }
-
-          const excerpt = attributes.excerpt ? attributes.excerpt :
-            MarkdownProcessor.getExcerpt(content);
-
-          const html = pugLayout({ ...attributes, excerpt, url, date, content, ...viewData });
+          const html = pugLayout({ ...attributes, content, url, ...viewData });
 
           fs.outputFile(destination, html)
-            .then(() => resolve({ ...attributes, excerpt, destination, url, date }))
+            .then(() => resolve({ ...attributes, url }))
             .catch(err => reject(err))
         })
         .catch(err => reject(err));

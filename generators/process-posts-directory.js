@@ -1,6 +1,6 @@
 const { URL } = require('url');
 const path = require('path');
-const getPostMarkdownFiles = require('./file-finder/get-post-markdown-files');
+const getPostMarkdownFiles = require('./file-util/get-post-markdown-files');
 const MarkdownProcessor = require('./markdown-processor');
 const createPostsIndex = require('./create-posts-index');
 
@@ -12,16 +12,18 @@ const processPostsDirectory = config => new Promise((resolve, reject) =>
   })
   .then(files => {
     const markdownProcessor = new MarkdownProcessor({
-      defaultLayout: config.defaultLayout,
+      defaultLayout: config.posts.defaultLayout,
       layoutsPath: path.join(config.sourcePath, config.layoutsDir)
     });
 
-    Promise.all(files.map(({ source, destination, url, date }) =>
-      markdownProcessor.process(source, destination, {
-        defaultLayout: config.posts.defaultLayout,
+    Promise.all(files.map(({ source, destination, url }) =>
+      markdownProcessor.process({
+        source,
+        destination,
         url,
-        date,
-        config
+        viewData: {
+          config
+        }
       })
     ))
     .then(results => createPostsIndex(results, config))

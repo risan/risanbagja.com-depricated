@@ -1,7 +1,7 @@
 const { URL } = require('url');
 const path = require('path');
 const fs = require('fs-extra');
-const getProcessableFiles = require('./file-finder/get-processable-files');
+const getProcessableFiles = require('./file-util/get-processable-files');
 const MarkdownProcessor = require('./markdown-processor');
 
 const processRootDirectory = config => new Promise((resolve, reject) =>
@@ -20,7 +20,14 @@ const processRootDirectory = config => new Promise((resolve, reject) =>
 
       const processMarkdownFiles = Promise.all(
         markdownFiles.map(({ source, destination, url }) =>
-          markdownProcessor.process(source, destination, { config })
+          markdownProcessor.process({
+            source,
+            destination,
+            url,
+            viewData: {
+              config
+            }
+          })
         )
       ).then(() => console.log('✅ Done processing markdown files on root directory...'));;
 

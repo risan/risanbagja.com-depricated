@@ -2,6 +2,10 @@
 
 $max-container-width: 54rem;
 
+html {
+    font-size: $font-size-base;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -79,12 +83,12 @@ header {
         &:link,
         &:visited {
             color: $font-color;
-        }   
+        }
 
         &:hover,
         &:active {
             color: $link-color-hover;
-        }   
+        }
     }
 }
 

@@ -2,8 +2,11 @@ const { URL } = require('url');
 const path = require('path');
 const MarkdownProcessor = require('./markdown-processor');
 
-const getPaginationPath = (pageNumber, paginationPath) => pageNumber === 1 ?
-  '' : paginationPath.replace(':num', pageNumber);
+const getPaginationUrl = ({ pageNumber, paginationPath, baseUrl }) => {
+  const path = pageNumber === 1 ? '' : paginationPath.replace(':num', pageNumber);
+
+  return (new URL(`${baseUrl.pathname}/${path}`, baseUrl.origin)).toString();
+}
 
 const getPaginationFilename = (pageNumber, paginationPath) => {
   if (pageNumber === 1) {
@@ -16,23 +19,13 @@ const getPaginationFilename = (pageNumber, paginationPath) => {
 };
 
 const nextPageUrl = ({ pageNumber, totalPages, paginationPath, baseUrl }) => {
-  if (pageNumber === totalPages) {
-    return null;
-  }
-
-  const path = getPaginationPath(pageNumber + 1, paginationPath);
-
-  return (new URL(`${baseUrl.pathname}/${path}`, baseUrl.origin)).toString();
+  return pageNumber === totalPages ? null :
+    getPaginationUrl({ pageNumber: pageNumber + 1, paginationPath, baseUrl });
 };
 
-const previousPageUrl = ({ pageNumber, totalPages, paginationPath, baseUrl }) => {
-  if (pageNumber === 1) {
-    return null;
-  }
-
-  const path = getPaginationPath(pageNumber - 1, paginationPath);
-
-  return (new URL(`${baseUrl.pathname}/${path}`, baseUrl.origin)).toString();
+const previousPageUrl = ({ pageNumber, paginationPath, baseUrl }) => {
+  return pageNumber === 1 ? null :
+    getPaginationUrl({ pageNumber: pageNumber - 1, paginationPath, baseUrl });
 };
 
 const sortPostsByDateDesc = posts => posts.sort((a, b) => b.date - a.date);
@@ -52,8 +45,9 @@ const groupPostsByPage = ({ posts, perPage, paginationPath, baseUrl }) => {
       pagination: {
         number: pageNumber,
         totalPages,
+        currentUrl: getPaginationUrl({ pageNumber, paginationPath, baseUrl }),
         nextUrl: nextPageUrl({ pageNumber, totalPages, paginationPath, baseUrl }),
-        previousUrl: previousPageUrl({ pageNumber, totalPages, paginationPath, baseUrl })
+        previousUrl: previousPageUrl({ pageNumber, paginationPath, baseUrl })
       }
     };
   }
@@ -82,10 +76,15 @@ const createPostsIndex = (posts, config) => new Promise((resolve, reject) => {
     const filename = getPaginationFilename(pagination.number, config.posts.pagination.path);
     const destination = path.join(config.destinationPath, config.posts.destinationDir, filename);
 
-    return markdownProcessor.process(source, destination, {
-      config,
-      posts,
-      pagination
+    return markdownProcessor.process({
+      source,
+      destination,
+      url: pagination.currentUrl,
+      viewData: {
+        config,
+        posts,
+        pagination
+      }
     });
   }))
   .then(results => resolve(results))

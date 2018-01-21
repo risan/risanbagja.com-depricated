@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "build": "webpack --progress --hide-modules",
-    "watch": "webpack --progress --hide-modules --watch"
+    "production": "NODE_ENV=production node build.js",
+    "build": "node build.js",
+    "watch": "node build.js --watch"
   },
   "dependencies": {
     "chokidar": "^2.0.0",
@@ -9,14 +10,14 @@
     "date-fns": "^1.29.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "front-matter": "^2.3.0",
+    "fs-extra": "^5.0.0",
     "markdown-it": "^8.4.0",
     "node-sass": "^4.7.2",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
     "pug": "^2.0.0-rc.4",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0"
   },
-  "devDependencies": {
-    "fs-extra": "^5.0.0"
-  }
+  "devDependencies": {}
 }

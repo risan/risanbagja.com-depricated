@@ -2,15 +2,32 @@ const path = require('path');
 const chokidar = require('chokidar');
 const config = require('./config');
 const generate = require('./generators/generate');
+const webpackRunner = require('./webpack-runner');
 
-const enableWatch = process.argv.filter(arg => arg === '--watch').length > 0;
+const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
+const ENABLE_WATCH = process.argv.filter(arg => arg === '--watch').length > 0;
 
 generate(config)
   .then(() => {
     console.log('🎉 Done generating static sites...');
 
-    if (enableWatch) {
+    if (ENABLE_WATCH) {
       startWatcher();
+
+      webpackRunner.watch({
+        onSuccess: stats => {
+          webpackRunner.printStats(stats);
+          console.log('🎉 Done bundling assets...')
+        },
+        onError: err => webpackRunner.printError(err)
+      });
+    } else {
+      webpackRunner.run()
+        .then(stats => {
+          webpackRunner.printStats(stats);
+          console.log('🎉 Done bundling assets...')
+        })
+        .catch(err => webpackRunner.printError(err));
     }
   })
   .catch(err => console.error(err));
@@ -36,7 +53,7 @@ const handleChange = (type, path) => {
 
 const startWatcher = () => {
   const watcher = chokidar.watch(config.sourcePath, {
-    ignored: [/(^|[\/\\])\../, path.join(config.sourcePath, 'assets')],
+    ignored: [/(^|[\/\\])\../, path.join(config.sourcePath, config.assets.sourceDir)],
     persistent: true
   });
 
