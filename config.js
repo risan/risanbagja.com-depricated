@@ -1,11 +1,12 @@
 const path = require('path');
 
-const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 module.exports = {
   // Site config
   url: 'http://localhost:8000',
-  siteDescription: 'Risan Bagja Pradana is an experienced Javascript and PHP developer',
+  siteDescription:
+    'Risan Bagja Pradana is an experienced Javascript and PHP developer',
 
   // Where things are
   sourcePath: path.resolve(__dirname, 'src'),
@@ -21,8 +22,8 @@ module.exports = {
     defaultLayout: 'post',
     pagination: {
       perPage: 4,
-      path: 'page:num.html',
-    },
+      path: 'page:num.html'
+    }
   },
 
   // Markdown settings
@@ -33,7 +34,7 @@ module.exports = {
     sourceDir: 'assets',
     destinationDir: 'assets',
     entries: {
-      blog: 'scss/blog.scss',
-    },
-  },
+      blog: 'scss/blog.scss'
+    }
+  }
 };

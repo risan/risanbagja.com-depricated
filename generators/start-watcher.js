@@ -23,22 +23,28 @@ const handleChange = ({ type, filePath, config }) => {
     .catch(err => console.error(err));
 };
 
-const startWatcher = (config) => {
+const startWatcher = config => {
   const watcher = chokidar.watch(config.sourcePath, {
     ignored: [
       /(^|[/\\])\../,
-      path.join(config.sourcePath, config.assets.sourceDir),
+      path.join(config.sourcePath, config.assets.sourceDir)
     ],
-    persistent: true,
+    persistent: true
   });
 
   watcher
     .on('ready', () => {
       console.log('👀 Initial scan complete, watching for file changes...');
-      watcher.on('add', filePath => handleChange({ type: 'add', filePath, config }));
+      watcher.on('add', filePath =>
+        handleChange({ type: 'add', filePath, config })
+      );
     })
-    .on('change', filePath => handleChange({ type: 'change', filePath, config }))
-    .on('unlink', filePath => handleChange({ type: 'unlink', filePath, config }))
+    .on('change', filePath =>
+      handleChange({ type: 'change', filePath, config })
+    )
+    .on('unlink', filePath =>
+      handleChange({ type: 'unlink', filePath, config })
+    )
     .on('error', error => console.error(error));
 
   return watcher;

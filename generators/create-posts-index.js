@@ -3,9 +3,10 @@ const path = require('path');
 const MarkdownProcessor = require('./markdown-processor');
 
 const getPaginationUrl = ({ pageNumber, paginationPath, baseUrl }) => {
-  const name = pageNumber === 1 ? '' : paginationPath.replace(':num', pageNumber);
+  const name =
+    pageNumber === 1 ? '' : paginationPath.replace(':num', pageNumber);
 
-  return (new URL(`${baseUrl.pathname}/${name}`, baseUrl.origin)).toString();
+  return new URL(`${baseUrl.pathname}/${name}`, baseUrl.origin).toString();
 };
 
 const getPaginationFilename = (pageNumber, paginationPath) => {
@@ -18,19 +19,19 @@ const getPaginationFilename = (pageNumber, paginationPath) => {
   return path.extname(filename) ? filename : path.join(filename, 'index.html');
 };
 
-const nextPageUrl = ({
-  pageNumber, totalPages, paginationPath, baseUrl,
-}) => (pageNumber === totalPages ? null :
-  getPaginationUrl({ pageNumber: pageNumber + 1, paginationPath, baseUrl }));
+const nextPageUrl = ({ pageNumber, totalPages, paginationPath, baseUrl }) =>
+  pageNumber === totalPages
+    ? null
+    : getPaginationUrl({ pageNumber: pageNumber + 1, paginationPath, baseUrl });
 
-const previousPageUrl = ({ pageNumber, paginationPath, baseUrl }) => (pageNumber === 1 ? null :
-  getPaginationUrl({ pageNumber: pageNumber - 1, paginationPath, baseUrl }));
+const previousPageUrl = ({ pageNumber, paginationPath, baseUrl }) =>
+  pageNumber === 1
+    ? null
+    : getPaginationUrl({ pageNumber: pageNumber - 1, paginationPath, baseUrl });
 
 const sortPostsByDateDesc = posts => posts.sort((a, b) => b.date - a.date);
 
-const groupPostsByPage = ({
-  posts, perPage, paginationPath, baseUrl,
-}) => {
+const groupPostsByPage = ({ posts, perPage, paginationPath, baseUrl }) => {
   const sortedPosts = sortPostsByDateDesc(posts);
 
   const totalPages = Math.ceil(sortedPosts.length / perPage);
@@ -47,51 +48,68 @@ const groupPostsByPage = ({
         totalPages,
         currentUrl: getPaginationUrl({ pageNumber, paginationPath, baseUrl }),
         nextUrl: nextPageUrl({
-          pageNumber, totalPages, paginationPath, baseUrl,
+          pageNumber,
+          totalPages,
+          paginationPath,
+          baseUrl
         }),
-        previousUrl: previousPageUrl({ pageNumber, paginationPath, baseUrl }),
-      },
+        previousUrl: previousPageUrl({ pageNumber, paginationPath, baseUrl })
+      }
     };
   }
 
   return pages;
 };
 
-const createPostsIndex = (posts, config) => new Promise((resolve, reject) => {
-  const baseUrl = new URL(config.posts.destinationDir, config.url);
+const createPostsIndex = (posts, config) =>
+  new Promise((resolve, reject) => {
+    const baseUrl = new URL(config.posts.destinationDir, config.url);
 
-  const pages = groupPostsByPage({
-    posts,
-    perPage: config.posts.pagination.perPage,
-    paginationPath: config.posts.pagination.path,
-    baseUrl,
-  });
-
-  const markdownProcessor = new MarkdownProcessor({
-    defaultLayout: config.defaultLayout,
-    layoutsPath: path.join(config.sourcePath, config.layoutsDir),
-    defaultMinify: config.minifyOutput,
-  });
-
-  const source = path.join(config.sourcePath, config.posts.sourceDir, 'index.md');
-
-  Promise.all(pages.map(({ posts: pagePosts, pagination }) => {
-    const filename = getPaginationFilename(pagination.number, config.posts.pagination.path);
-    const destination = path.join(config.destinationPath, config.posts.destinationDir, filename);
-
-    return markdownProcessor.process({
-      source,
-      destination,
-      url: pagination.currentUrl,
-      viewData: {
-        config,
-        posts: pagePosts,
-        pagination,
-      },
+    const pages = groupPostsByPage({
+      posts,
+      perPage: config.posts.pagination.perPage,
+      paginationPath: config.posts.pagination.path,
+      baseUrl
     });
-  }))
-    .then(results => resolve(results))
-    .catch(err => reject(err));
-});
+
+    const markdownProcessor = new MarkdownProcessor({
+      defaultLayout: config.defaultLayout,
+      layoutsPath: path.join(config.sourcePath, config.layoutsDir),
+      defaultMinify: config.minifyOutput
+    });
+
+    const source = path.join(
+      config.sourcePath,
+      config.posts.sourceDir,
+      'index.md'
+    );
+
+    Promise.all(
+      pages.map(({ posts: pagePosts, pagination }) => {
+        const filename = getPaginationFilename(
+          pagination.number,
+          config.posts.pagination.path
+        );
+        const destination = path.join(
+          config.destinationPath,
+          config.posts.destinationDir,
+          filename
+        );
+
+        return markdownProcessor.process({
+          source,
+          destination,
+          url: pagination.currentUrl,
+          viewData: {
+            config,
+            posts: pagePosts,
+            pagination
+          }
+        });
+      })
+    )
+      .then(results => resolve(results))
+      .catch(err => reject(err));
+  });
 
 module.exports = createPostsIndex;

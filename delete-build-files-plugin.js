@@ -9,9 +9,12 @@ class DeleteBuildFilesPlugin {
 
   apply(compiler) {
     compiler.plugin('done', () =>
-      Promise.all(this.files.map(file => fs.remove(path.join(this.buildPath, file))))
+      Promise.all(
+        this.files.map(file => fs.remove(path.join(this.buildPath, file)))
+      )
         .then(() => console.log(`🔥 ${this.files.join(', ')} are deleted`))
-        .catch(err => console.error(err)));
+        .catch(err => console.error(err))
+    );
   }
 }
 

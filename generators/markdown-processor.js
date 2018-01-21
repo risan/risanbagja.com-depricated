@@ -17,26 +17,32 @@ class MarkdownProcessor {
     url = null,
     defaultLayout = this.defaultLayout,
     minify = this.defaultMinify,
-    viewData = {},
+    viewData = {}
   }) {
     return new Promise((resolve, reject) => {
       parseMarkdown(source)
         .then(({ attributes, content }) => {
           const { layout = defaultLayout } = attributes;
 
-          const pugLayout = pug.compileFile(path.join(this.layoutsPath, `${layout}.pug`));
+          const pugLayout = pug.compileFile(
+            path.join(this.layoutsPath, `${layout}.pug`)
+          );
 
           let html = pugLayout({
-            ...attributes, content, url, ...viewData,
+            ...attributes,
+            content,
+            url,
+            ...viewData
           });
 
           if (minify) {
             html = minifyHtml(html, {
-              collapseWhitespace: true,
+              collapseWhitespace: true
             });
           }
 
-          fs.outputFile(destination, html)
+          fs
+            .outputFile(destination, html)
             .then(() => resolve({ ...attributes, url }))
             .catch(err => reject(err));
         })
