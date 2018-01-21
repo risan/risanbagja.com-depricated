@@ -25,10 +25,11 @@
   "scripts": {
     "production": "NODE_ENV=production node build.js",
     "build": "node build.js",
-    "watch": "node build.js --watch"
+    "watch": "node build.js --watch",
+    "lint": "eslint *.js generators",
+    "lint-fix": "eslint *.js generators --fix"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "chokidar": "^2.0.0",
     "css-loader": "^0.28.8",
     "eslint": "^4.16.0",
