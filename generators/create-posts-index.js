@@ -3,10 +3,10 @@ const path = require('path');
 const MarkdownProcessor = require('./markdown-processor');
 
 const getPaginationUrl = ({ pageNumber, paginationPath, baseUrl }) => {
-  const path = pageNumber === 1 ? '' : paginationPath.replace(':num', pageNumber);
+  const name = pageNumber === 1 ? '' : paginationPath.replace(':num', pageNumber);
 
-  return (new URL(`${baseUrl.pathname}/${path}`, baseUrl.origin)).toString();
-}
+  return (new URL(`${baseUrl.pathname}/${name}`, baseUrl.origin)).toString();
+};
 
 const getPaginationFilename = (pageNumber, paginationPath) => {
   if (pageNumber === 1) {
@@ -18,25 +18,25 @@ const getPaginationFilename = (pageNumber, paginationPath) => {
   return path.extname(filename) ? filename : path.join(filename, 'index.html');
 };
 
-const nextPageUrl = ({ pageNumber, totalPages, paginationPath, baseUrl }) => {
-  return pageNumber === totalPages ? null :
-    getPaginationUrl({ pageNumber: pageNumber + 1, paginationPath, baseUrl });
-};
+const nextPageUrl = ({
+  pageNumber, totalPages, paginationPath, baseUrl,
+}) => (pageNumber === totalPages ? null :
+  getPaginationUrl({ pageNumber: pageNumber + 1, paginationPath, baseUrl }));
 
-const previousPageUrl = ({ pageNumber, paginationPath, baseUrl }) => {
-  return pageNumber === 1 ? null :
-    getPaginationUrl({ pageNumber: pageNumber - 1, paginationPath, baseUrl });
-};
+const previousPageUrl = ({ pageNumber, paginationPath, baseUrl }) => (pageNumber === 1 ? null :
+  getPaginationUrl({ pageNumber: pageNumber - 1, paginationPath, baseUrl }));
 
 const sortPostsByDateDesc = posts => posts.sort((a, b) => b.date - a.date);
 
-const groupPostsByPage = ({ posts, perPage, paginationPath, baseUrl }) => {
+const groupPostsByPage = ({
+  posts, perPage, paginationPath, baseUrl,
+}) => {
   const sortedPosts = sortPostsByDateDesc(posts);
 
   const totalPages = Math.ceil(sortedPosts.length / perPage);
   const pages = [];
 
-  for (let i = 0; i < totalPages; i++) {
+  for (let i = 0; i < totalPages; i += 1) {
     const startIdx = i * perPage;
     const pageNumber = i + 1;
 
@@ -46,14 +46,16 @@ const groupPostsByPage = ({ posts, perPage, paginationPath, baseUrl }) => {
         number: pageNumber,
         totalPages,
         currentUrl: getPaginationUrl({ pageNumber, paginationPath, baseUrl }),
-        nextUrl: nextPageUrl({ pageNumber, totalPages, paginationPath, baseUrl }),
-        previousUrl: previousPageUrl({ pageNumber, paginationPath, baseUrl })
-      }
+        nextUrl: nextPageUrl({
+          pageNumber, totalPages, paginationPath, baseUrl,
+        }),
+        previousUrl: previousPageUrl({ pageNumber, paginationPath, baseUrl }),
+      },
     };
   }
 
   return pages;
-}
+};
 
 const createPostsIndex = (posts, config) => new Promise((resolve, reject) => {
   const baseUrl = new URL(config.posts.destinationDir, config.url);
@@ -62,18 +64,18 @@ const createPostsIndex = (posts, config) => new Promise((resolve, reject) => {
     posts,
     perPage: config.posts.pagination.perPage,
     paginationPath: config.posts.pagination.path,
-    baseUrl
+    baseUrl,
   });
 
   const markdownProcessor = new MarkdownProcessor({
     defaultLayout: config.defaultLayout,
     layoutsPath: path.join(config.sourcePath, config.layoutsDir),
-    defaultMinify: config.minifyOutput
+    defaultMinify: config.minifyOutput,
   });
 
   const source = path.join(config.sourcePath, config.posts.sourceDir, 'index.md');
 
-  Promise.all(pages.map(({ posts, pagination }) => {
+  Promise.all(pages.map(({ posts: pagePosts, pagination }) => {
     const filename = getPaginationFilename(pagination.number, config.posts.pagination.path);
     const destination = path.join(config.destinationPath, config.posts.destinationDir, filename);
 
@@ -83,13 +85,13 @@ const createPostsIndex = (posts, config) => new Promise((resolve, reject) => {
       url: pagination.currentUrl,
       viewData: {
         config,
-        posts,
-        pagination
-      }
+        posts: pagePosts,
+        pagination,
+      },
     });
   }))
-  .then(results => resolve(results))
-  .catch(err => reject(err));
+    .then(results => resolve(results))
+    .catch(err => reject(err));
 });
 
 module.exports = createPostsIndex;

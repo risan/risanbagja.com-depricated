@@ -10,31 +10,29 @@ const processPostsDirectory = config => new Promise((resolve, reject) =>
     destinationPath: path.join(config.destinationPath, config.posts.destinationDir),
     baseUrl: new URL(config.posts.destinationDir, config.url),
   })
-  .then(files => {
-    const markdownProcessor = new MarkdownProcessor({
-      defaultLayout: config.posts.defaultLayout,
-      layoutsPath: path.join(config.sourcePath, config.layoutsDir),
-      defaultMinify: config.minifyOutput
-    });
+    .then((files) => {
+      const markdownProcessor = new MarkdownProcessor({
+        defaultLayout: config.posts.defaultLayout,
+        layoutsPath: path.join(config.sourcePath, config.layoutsDir),
+        defaultMinify: config.minifyOutput,
+      });
 
-    Promise.all(files.map(({ source, destination, url }) =>
-      markdownProcessor.process({
-        source,
-        destination,
-        url,
-        viewData: {
-          config
-        }
-      })
-    ))
-    .then(results => createPostsIndex(results, config))
-    .then(() => {
-      console.log('✅ Done processing posts directory...');
-      resolve(true);
+      Promise.all(files.map(({ source, destination, url }) =>
+        markdownProcessor.process({
+          source,
+          destination,
+          url,
+          viewData: {
+            config,
+          },
+        })))
+        .then(results => createPostsIndex(results, config))
+        .then(() => {
+          console.log('✅ Done processing posts directory...');
+          resolve(true);
+        })
+        .catch(err => reject(err));
     })
-    .catch(err => reject(err));
-  })
-  .catch(err => reject(err))
-);
+    .catch(err => reject(err)));
 
 module.exports = processPostsDirectory;

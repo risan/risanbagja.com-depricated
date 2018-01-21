@@ -9,16 +9,16 @@ const watch = () => {
   startWatcher(config);
 
   webpackRunner.watch({
-    onSuccess: stats => {
+    onSuccess: (stats) => {
       webpackRunner.printStats(stats);
-      console.log('🎉 Done bundling assets...')
+      console.log('🎉 Done bundling assets...');
     },
-    onError: err => webpackRunner.printError(err)
+    onError: err => webpackRunner.printError(err),
   });
 };
 
 webpackRunner.run()
-  .then(stats => {
+  .then((stats) => {
     webpackRunner.printStats(stats);
     console.log('🎉 Done bundling assets...');
 

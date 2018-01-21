@@ -1,4 +1,5 @@
 const path = require('path');
+
 const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
 
 module.exports = {
@@ -20,8 +21,8 @@ module.exports = {
     defaultLayout: 'post',
     pagination: {
       perPage: 4,
-      path: 'page:num.html'
-    }
+      path: 'page:num.html',
+    },
   },
 
   // Markdown settings
@@ -32,7 +33,7 @@ module.exports = {
     sourceDir: 'assets',
     destinationDir: 'assets',
     entries: {
-      blog: 'scss/blog.scss'
-    }
-  }
+      blog: 'scss/blog.scss',
+    },
+  },
 };

@@ -13,7 +13,7 @@ const run = () => new Promise((resolve, reject) =>
       return reject(stats.toJson().errors);
     }
 
-    resolve(stats);
+    return resolve(stats);
   }));
 
 const watch = ({ onError = () => {}, onSuccess = () => {} } = {}) => compiler.watch({
@@ -27,10 +27,10 @@ const watch = ({ onError = () => {}, onSuccess = () => {} } = {}) => compiler.wa
     return onError(stats.toJson().errors);
   }
 
-  onSuccess(stats);
+  return onSuccess(stats);
 });
 
-const printStats = stats => {
+const printStats = (stats) => {
   if (stats.hasWarnings()) {
     console.warn(stats.toJson().warnings);
   }
@@ -39,21 +39,21 @@ const printStats = stats => {
     cachedAssets: false,
     chunks: false,
     colors: true,
-    modules: false
+    modules: false,
   }));
-}
+};
 
-const printError = err => {
+const printError = (err) => {
   console.error(err.stack || err);
 
   if (err.details) {
     console.error(err.details);
   }
-}
+};
 
 module.exports = {
   run,
   watch,
   printStats,
-  printError
+  printError,
 };
