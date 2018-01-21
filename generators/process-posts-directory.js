@@ -13,7 +13,8 @@ const processPostsDirectory = config => new Promise((resolve, reject) =>
   .then(files => {
     const markdownProcessor = new MarkdownProcessor({
       defaultLayout: config.posts.defaultLayout,
-      layoutsPath: path.join(config.sourcePath, config.layoutsDir)
+      layoutsPath: path.join(config.sourcePath, config.layoutsDir),
+      defaultMinify: config.minifyOutput
     });
 
     Promise.all(files.map(({ source, destination, url }) =>

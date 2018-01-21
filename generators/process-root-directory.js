@@ -15,7 +15,8 @@ const processRootDirectory = config => new Promise((resolve, reject) =>
 
       const markdownProcessor = new MarkdownProcessor({
         defaultLayout: config.defaultLayout,
-        layoutsPath: path.join(config.sourcePath, config.layoutsDir)
+        layoutsPath: path.join(config.sourcePath, config.layoutsDir),
+        defaultMinify: config.minifyOutput
       });
 
       const processMarkdownFiles = Promise.all(

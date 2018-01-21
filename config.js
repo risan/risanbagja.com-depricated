@@ -1,4 +1,5 @@
 const path = require('path');
+const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
 
 module.exports = {
   // Site config
@@ -23,12 +24,14 @@ module.exports = {
     }
   },
 
+  // Markdown settings
+  minifyOutput: IS_PRODUCTION,
+
   // Assets settings
   assets: {
     sourceDir: 'assets',
     destinationDir: 'assets',
     entries: {
-      index: 'scss/index.scss',
       blog: 'scss/blog.scss'
     }
   }
