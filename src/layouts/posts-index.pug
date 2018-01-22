@@ -40,6 +40,8 @@ html(lang='en')
     else
       meta(name='twitter:image' content=config.twitterCard.imageUrl)
 
+    link(rel='canonical' href=url)
+
     style
       include includes/posts-index-critical.css
     link(rel='preload' href=`${config.url}/assets/posts-index.css` as='style' onload='this.onload=null;this.rel="stylesheet"')
