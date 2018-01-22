@@ -23,7 +23,8 @@ module.exports = {
     pagination: {
       perPage: 4,
       path: 'page:num.html'
-    }
+    },
+    defaultFeaturedImageSmall: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=500&q=80'
   },
 
   // Markdown settings

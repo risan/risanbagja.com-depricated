@@ -32,7 +32,7 @@ html(lang='en')
       each post in posts
         article.article
           a.article-link(href='#')
-            div.article-img
+            div.article-img(style=`background-image: url("${post.featured_image_small || config.posts.defaultFeaturedImageSmall}")`)
             h2.article-title= post.title
             p.article-excerpt= post.excerpt
 
