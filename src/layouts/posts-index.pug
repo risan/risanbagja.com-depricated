@@ -3,9 +3,43 @@ html(lang='en')
   head
     meta(charset='utf-8')
     meta(http-equiv='x-ua-compatible' content='ie=edge')
-    meta(name='description' content=config.siteDescription)
+    title= pagination.number > 1 ? `${title} - Page ${pagination.number}` : title
+    meta(name='description' content=metaDescription || config.defaultMetaDescription)
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    title= title
+
+    // Facebook Open Graph
+    meta(property='og:url' content=url)
+    meta(property='og:type' content='website')
+    meta(property='og:title' content=pagination.number > 1 ? `${title} - Page ${pagination.number}` : title)
+    meta(property='og:description' content=metaDescription || config.defaultMetaDescription)
+
+    if socialImage
+      meta(property='og:image' content=socialImage.url)
+      meta(property='og:image:width' content=socialImage.width || 1200)
+      meta(property='og:image:height' content=socialImage.height || 600)
+    else
+      meta(property='og:image' content=config.openGraph.defaultImage.url)
+      meta(property='og:image:width' content=config.openGraph.defaultImage.width || 1200)
+      meta(property='og:image:height' content=config.openGraph.defaultImage.height || 600)
+
+    // Twitter Card
+    if twitterCard
+      meta(name='twitter:card' content=twitterCard.type || config.twitterCard.type)
+      meta(name='twitter:site' content=twitterCard.site || config.twitterCard.site)
+      meta(name='twitter:creator' content=twitterCard.creator || config.twitterCard.creator)
+    else
+      meta(name='twitter:card' content=config.twitterCard.type)
+      meta(name='twitter:site' content=config.twitterCard.site)
+      meta(name='twitter:creator' content=config.twitterCard.creator)
+
+    meta(name='twitter:title' content=pagination.number > 1 ? `${title} - Page ${pagination.number}` : title)
+    meta(name='twitter:description' content=metaDescription || config.defaultMetaDescription)
+
+    if socialImage
+      meta(name='twitter:image' content=socialImage.url)
+    else
+      meta(name='twitter:image' content=config.twitterCard.imageUrl)
+
     style
       include includes/posts-index-critical.css
     link(rel='preload' href=`${config.url}/assets/posts-index.css` as='style' onload='this.onload=null;this.rel="stylesheet"')
@@ -16,23 +50,16 @@ html(lang='en')
   body
     header.container.header
       h1.header-title
-        a(href='/') Risan Bagja Pradana
-      h2.header-subtitle Tutorials, coding practice, and software craftmanship
+        a(href='/')= config.title
+      h2.header-site-description= config.siteDescription
 
-    nav.container.nav
-      ul.nav-menu
-        li.nav-menu-item
-          a.btn(href='#') Home
-        li.nav-menu-item
-          a.btn(href='#') About
-        li.nav-menu-item
-          a.btn(href='#') Archive
+    include includes/nav.pug
 
     main.container.article-list
       each post in posts
         article.article
           a.article-link(href= post.url)
-            div.article-img(style=`background-image: url("${post.featured_image_small || config.posts.defaultFeaturedImageSmall}")`)
+            div.article-img(style=`background-image: url("${post.featuredImageSmall || config.posts.defaultFeaturedImageSmall}")`)
             h2.article-title= post.title
             p.article-excerpt= post.excerpt
 
@@ -48,13 +75,6 @@ html(lang='en')
         Except where otherwise noted, content on this blog is licensed under a
         #[a(rel='license' href='https://creativecommons.org/licenses/by/4.0/') Creative Commons Attribution 4.0 International License].
       ul.footer-menu
-        li.footer-menu-item
-          a.footer-menu-link(title='Github' href='https://github.com/risan') Github
-        li.footer-menu-item
-          a.footer-menu-link(title='Stackoverflow' href='https://stackoverflow.com/users/5138222') Stackoverflow
-        li.footer-menu-item
-          a.footer-menu-link.medium(title='Medium' href='https://medium.com/risan') Medium
-        li.footer-menu-item
-          a.footer-menu-link.twitter(title='Twitter' href='https://twitter.com/risanbagja') Twitter
-        li.footer-menu-item
-          a.footer-menu-link.gmail(title='Email' href='mailto:risanbagja@gmail.com') Email
+        each url, websiteName in config.socialLinks
+          li.footer-menu-item
+            a.footer-menu-link(title=websiteName href=url)= websiteName
