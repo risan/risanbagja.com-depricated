@@ -1,6 +1,6 @@
 const { URL } = require('url');
 const path = require('path');
-const fs = require('fs-extra');
+const copyFile = require('./file-util/copy-file');
 const getProcessableFiles = require('./file-util/get-processable-files');
 const MarkdownProcessor = require('./markdown-processor');
 
@@ -10,9 +10,9 @@ const processRootDirectory = config =>
       .then(({ markdownFiles, copyableFiles }) => {
         const copyFiles = Promise.all(
           copyableFiles.map(({ source, destination }) =>
-            fs.copy(source, destination)
+            copyFile(source, destination)
           )
-        ).then(() => console.log('✅ Done copying files on root directory...'));
+        );
 
         const markdownProcessor = new MarkdownProcessor({
           defaultLayout: config.defaultLayout,
@@ -31,8 +31,6 @@ const processRootDirectory = config =>
               }
             })
           )
-        ).then(() =>
-          console.log('✅ Done processing markdown files on root directory...')
         );
 
         Promise.all([copyFiles, processMarkdownFiles])

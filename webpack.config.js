@@ -55,7 +55,7 @@ const assetsConfig = {
   plugins: [
     extractSass,
     new DeleteBuildFilesPlugin(
-      ['blog.js'],
+      ['posts-index.js'],
       path.join(config.destinationPath, config.assets.destinationDir)
     )
   ]
