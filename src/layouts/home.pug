@@ -3,9 +3,44 @@ html(lang='en')
   head
     meta(charset='utf-8')
     meta(http-equiv='x-ua-compatible' content='ie=edge')
-    meta(name='description' content=config.siteDescription)
-    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     title= title
+    meta(name='description' content=metaDescription || config.defaultMetaDescription)
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+
+    // Facebook Open Graph
+    meta(property='og:url' content=url)
+    meta(property='og:type' content='article')
+    meta(property='og:site_name' content=config.openGraph.siteName)
+    meta(property='og:locale' content=config.openGraph.locale)
+    meta(property='og:title' content=title)
+    meta(property='og:description' content=metaDescription || config.defaultMetaDescription)
+    if socialImage
+      meta(property='og:image' content=socialImage.url)
+      meta(property='og:image:width' content=socialImage.width || 1200)
+      meta(property='og:image:height' content=socialImage.height || 600)
+    else
+      meta(property='og:image' content=config.openGraph.defaultImage.url)
+      meta(property='og:image:width' content=config.openGraph.defaultImage.width || 1200)
+      meta(property='og:image:height' content=config.openGraph.defaultImage.height || 600)
+
+    // Twitter Card
+    if twitterCard
+      meta(name='twitter:card' content=twitterCard.type || config.twitterCard.type)
+      meta(name='twitter:site' content=twitterCard.site || config.twitterCard.site)
+      meta(name='twitter:creator' content=twitterCard.creator || config.twitterCard.creator)
+    else
+      meta(name='twitter:card' content=config.twitterCard.type)
+      meta(name='twitter:site' content=config.twitterCard.site)
+      meta(name='twitter:creator' content=config.twitterCard.creator)
+    meta(name='twitter:title' content=title)
+    meta(name='twitter:description' content=metaDescription || config.defaultMetaDescription)
+    if socialImage
+      meta(name='twitter:image' content=socialImage.url)
+    else
+      meta(name='twitter:image' content=config.twitterCard.imageUrl)
+
+    link(rel='canonical' href=url)
+
     style
       include includes/home-critical.css
   body
