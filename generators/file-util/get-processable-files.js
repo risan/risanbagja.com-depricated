@@ -1,9 +1,9 @@
 const fs = require('fs');
-const { URL } = require('url');
 const path = require('path');
 const util = require('util');
 const isMarkdownFile = require('./is-markdown-file');
 const shouldCopyFile = require('./should-copy-file');
+const generateUrl = require('./generate-url');
 
 const readdir = util.promisify(fs.readdir);
 
@@ -28,10 +28,7 @@ const getProcessableFiles = ({
             return {
               source: path.join(sourcePath, file),
               destination: path.join(destinationPath, filename),
-              url: new URL(
-                `${baseUrl.pathname}/${filename}`,
-                baseUrl.origin
-              ).toString()
+              url: generateUrl(filename, baseUrl)
             };
           }),
           copyableFiles: copyables.map(file => ({

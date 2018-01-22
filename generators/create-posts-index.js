@@ -1,12 +1,13 @@
 const { URL } = require('url');
 const path = require('path');
 const MarkdownProcessor = require('./markdown-processor');
+const generateUrl = require('./file-util/generate-url');
 
 const getPaginationUrl = ({ pageNumber, paginationPath, baseUrl }) => {
   const name =
     pageNumber === 1 ? '' : paginationPath.replace(':num', pageNumber);
 
-  return new URL(`${baseUrl.pathname}/${name}`, baseUrl.origin).toString();
+  return generateUrl(name, baseUrl);
 };
 
 const getPaginationFilename = (pageNumber, paginationPath) => {

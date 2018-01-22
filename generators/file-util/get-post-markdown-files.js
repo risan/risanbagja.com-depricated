@@ -1,8 +1,8 @@
 const fs = require('fs');
-const { URL } = require('url');
 const path = require('path');
 const util = require('util');
 const isDatePrefixMarkdownFile = require('./is-date-prefix-markdown-file');
+const generateUrl = require('./generate-url');
 
 const readdir = util.promisify(fs.readdir);
 
@@ -25,10 +25,7 @@ const getPostMarkdownFiles = ({ sourcePath, destinationPath, baseUrl }) =>
             return {
               source: path.join(sourcePath, file),
               destination: path.join(destinationPath, filename),
-              url: new URL(
-                `${baseUrl.pathname}/${filename}`,
-                baseUrl.origin
-              ).toString()
+              url: generateUrl(filename, baseUrl)
             };
           })
         );
