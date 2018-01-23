@@ -1,0 +1,8 @@
+meta(charset='utf-8')
+meta(http-equiv='x-ua-compatible' content='ie=edge')
+title= (pagination && pagination.number > 1) ? `${title} - Page ${pagination.number}` : title
+meta(name='description' content=metaDescription || excerpt || config.defaultMetaDescription)
+meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+include open-graph.pug
+include twitter-card.pug
+link(rel='canonical' href=url)

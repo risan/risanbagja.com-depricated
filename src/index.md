@@ -1,6 +1,7 @@
 ---
 title: Risan Bagja Pradana
 layout: home
+metaDescription: Risan Bagja Pradana is an experienced Javascript and PHP developer
 ---
 # Hi, my name is Risan Bagja Pradana
 

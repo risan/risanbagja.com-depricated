@@ -1,0 +1,8 @@
+footer.footer
+  p.footer-license.
+    Except where otherwise noted, content on this blog is licensed under a
+    #[a(rel='license' href='https://creativecommons.org/licenses/by/4.0/') Creative Commons Attribution 4.0 International License].
+  ul.footer-menu
+    each url, websiteName in config.socialLinks
+      li.footer-menu-item
+        a.footer-menu-link(title=websiteName href=url)= websiteName

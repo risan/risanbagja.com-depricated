@@ -1,11 +1,11 @@
 doctype html
 html(lang='en')
   head
-    meta(charset='utf-8')
-    meta(http-equiv='x-ua-compatible' content='ie=edge')
-    meta(name='description' content=config.siteDescription)
-    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    title= title
-    link(rel='stylesheet' href='assets/index.css')
+    include includes/head.pug
   body
-    div.container!= content
+    div.container
+      header.header
+        div.header-title: a(href='/')= config.title
+        div.header-site-description= config.siteDescription
+      include includes/nav.pug
+      main.article!= content
