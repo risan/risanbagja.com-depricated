@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 const minifyHtml = require('html-minifier').minify;
 const parseMarkdown = require('./parse-markdown');
 
-class MarkdownProcessor {
+class Processor {
   constructor({ defaultLayout, layoutsPath, defaultMinify = false }) {
     this.defaultLayout = defaultLayout;
     this.layoutsPath = layoutsPath;
@@ -51,4 +51,4 @@ class MarkdownProcessor {
   }
 }
 
-module.exports = MarkdownProcessor;
+module.exports = Processor;

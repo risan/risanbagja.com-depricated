@@ -1,16 +1,42 @@
-const config = require('./../site.config');
 const generate = require('./generate');
-const startWatcher = require('./start-watcher');
-const webpackRunner = require('./webpack-runner');
+const watch = require('./watch');
+const webpackCompiler = require('./webpack/compiler');
+
+const config = require('./../site.config');
+const webpackConfig = require('./../webpack.config');
 
 const ENABLE_WATCH = process.argv.filter(arg => arg === '--watch').length > 0;
 
-if (ENABLE_WATCH) {
+const build = () => {
+  webpackCompiler
+    .run(webpackConfig)
+    .then(stats => {
+      webpackCompiler.printStats(stats);
+
+      console.log('🎉 Done bundling assets...');
+
+      return generate(config);
+    })
+    .then(() => console.log('🎉 Done generating static sites...'))
+    .catch(err => webpackCompiler.printError(err));
+};
+
+const startWatcher = () => {
+  watch(config, {
+    onChange: () => {
+      generate(config)
+        .then(() => console.log('🎉 Done generating static sites...'))
+        .catch(err => console.error(err));
+    }
+  });
+};
+
+const buildAndWatch = () => {
   let firstTimeBuild = true;
 
-  webpackRunner.watch({
+  webpackCompiler.watch(webpackConfig, {
     onSuccess: stats => {
-      webpackRunner.printStats(stats);
+      webpackCompiler.printStats(stats);
       console.log('🎉 Done bundling assets...');
 
       if (firstTimeBuild) {
@@ -19,23 +45,17 @@ if (ENABLE_WATCH) {
         generate(config)
           .then(() => {
             console.log('🎉 Done generating static sites...');
-            startWatcher(config);
+            startWatcher();
           })
           .catch(err => console.error(err));
       }
     },
-    onError: err => webpackRunner.printError(err)
+    onError: err => webpackCompiler.printError(err)
   });
+};
+
+if (ENABLE_WATCH) {
+  buildAndWatch();
 } else {
-  webpackRunner
-    .run()
-    .then(stats => {
-      webpackRunner.printStats(stats);
-
-      console.log('🎉 Done bundling assets...');
-
-      return generate(config);
-    })
-    .then(() => console.log('🎉 Done generating static sites...'))
-    .catch(err => webpackRunner.printError(err));
+  build();
 }

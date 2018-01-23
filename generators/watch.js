@@ -15,15 +15,12 @@ const logChange = (type, filePath) => {
   }
 };
 
-const handleChange = ({ type, filePath, config }) => {
+const handleChange = ({ type, filePath, callback = () => {} }) => {
   logChange(type, filePath);
-
-  generate(config)
-    .then(() => console.log('🎉 Done regenerating static sites...'))
-    .catch(err => console.error(err));
+  callback({ type, filePath });
 };
 
-const startWatcher = config => {
+const watch = (config, { onReady = () => {}, onChange = () => {} } = {}) => {
   const watcher = chokidar.watch(config.sourcePath, {
     ignored: [
       /(^|[/\\])\../,
@@ -35,19 +32,21 @@ const startWatcher = config => {
   watcher
     .on('ready', () => {
       console.log('👀 Initial scan complete, watching for file changes...');
+      onReady();
+
       watcher.on('add', filePath =>
-        handleChange({ type: 'add', filePath, config })
+        handleChange({ type: 'add', filePath, callback: onChange })
       );
     })
     .on('change', filePath =>
-      handleChange({ type: 'change', filePath, config })
+      handleChange({ type: 'change', filePath, callback: onChange })
     )
     .on('unlink', filePath =>
-      handleChange({ type: 'unlink', filePath, config })
+      handleChange({ type: 'unlink', filePath, callback: onChange })
     )
     .on('error', error => console.error(error));
 
   return watcher;
 };
 
-module.exports = startWatcher;
+module.exports = watch;

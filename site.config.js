@@ -66,5 +66,15 @@ module.exports = {
     entries: {
       'posts-index': 'scss/posts-index.scss'
     }
+  },
+
+  // Critical assets
+  criticalAssets: {
+    sourceDir: 'assets',
+    destinationDir: 'layouts/includes', // Relative to sourcePath
+    entries: {
+      'home-critical': 'scss/home-critical.scss',
+      'posts-index-critical': 'scss/posts-index-critical.scss'
+    }
   }
 };

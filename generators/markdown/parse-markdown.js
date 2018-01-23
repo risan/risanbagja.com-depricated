@@ -3,7 +3,7 @@ const path = require('path');
 const util = require('util');
 const fm = require('front-matter');
 const MarkdownIt = require('markdown-it');
-const isDatePrefixMarkdownFile = require('./file-util/is-date-prefix-markdown-file');
+const isDatePrefixMarkdownFile = require('./../file-util/is-date-prefix-markdown-file');
 
 const readFile = util.promisify(fs.readFile);
 const md = new MarkdownIt();

@@ -51,7 +51,9 @@ const getWebpackAssetsConfig = config => {
       new CleanWebpackPlugin([
         `${assetOutputPath}/*.css`,
         `${assetOutputPath}/*.js`
-      ]),
+      ], {
+        allowExternal: true
+      }),
       extractSass,
       new CleanScssBuildPlugin(),
       new ManifestPlugin({

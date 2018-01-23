@@ -1,7 +1,7 @@
 const { URL } = require('url');
 const path = require('path');
-const MarkdownProcessor = require('./markdown-processor');
-const generateUrl = require('./file-util/generate-url');
+const MarkdownProcessor = require('./../markdown/processor');
+const generateUrl = require('./../file-util/generate-url');
 
 const getPaginationUrl = ({ pageNumber, paginationPath, baseUrl }) => {
   const name =

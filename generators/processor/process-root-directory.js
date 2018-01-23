@@ -1,8 +1,8 @@
 const { URL } = require('url');
 const path = require('path');
-const copyFile = require('./file-util/copy-file');
-const getProcessableFiles = require('./file-util/get-processable-files');
-const MarkdownProcessor = require('./markdown-processor');
+const copyFile = require('./../file-util/copy-file');
+const getProcessableFiles = require('./../file-util/get-processable-files');
+const MarkdownProcessor = require('./../markdown/processor');
 
 const processRootDirectory = config =>
   new Promise((resolve, reject) =>

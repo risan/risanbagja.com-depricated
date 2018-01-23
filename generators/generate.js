@@ -1,9 +1,8 @@
-const processRootDirectory = require('./process-root-directory');
-const processPostsDirectory = require('./process-posts-directory');
+const processor = require('./processor');
 
 const generate = config =>
   new Promise((resolve, reject) =>
-    Promise.all([processRootDirectory(config), processPostsDirectory(config)])
+    Promise.all([processor.processRootDirectory(config), processor.processPostsDirectory(config)])
       .then(() => resolve(true))
       .catch(err => reject(err))
   );

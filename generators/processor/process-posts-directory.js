@@ -1,7 +1,7 @@
 const { URL } = require('url');
 const path = require('path');
-const getPostMarkdownFiles = require('./file-util/get-post-markdown-files');
-const MarkdownProcessor = require('./markdown-processor');
+const getPostMarkdownFiles = require('./../file-util/get-post-markdown-files');
+const MarkdownProcessor = require('./../markdown/processor');
 const createPostsIndex = require('./create-posts-index');
 
 const processPostsDirectory = config =>

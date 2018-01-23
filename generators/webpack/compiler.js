@@ -1,11 +1,8 @@
 const webpack = require('webpack');
-const webpackConfig = require('./../webpack.config');
 
-const compiler = webpack(webpackConfig);
-
-const run = () =>
+const run = webpackConfig =>
   new Promise((resolve, reject) =>
-    compiler.run((err, stats) => {
+    webpack(webpackConfig).run((err, stats) => {
       if (err) {
         return reject(err);
       }
@@ -18,8 +15,8 @@ const run = () =>
     })
   );
 
-const watch = ({ onError = () => {}, onSuccess = () => {} } = {}) =>
-  compiler.watch(
+const watch = (webpackConfig, { onError = () => {}, onSuccess = () => {} } = {}) =>
+  webpack(webpackConfig).watch(
     {
       ignored: /node_modules/
     },
