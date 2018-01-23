@@ -7,7 +7,8 @@ const config = require('./config');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-const extractSass = new ExtractTextPlugin('[name].css');
+const extractSass = new ExtractTextPlugin('[name].[contenthash].css');
+const extractCriticalSass = new ExtractTextPlugin('[name].css');
 
 const normalizedEntries = entries =>
   Object.entries(entries).reduce((normalized, entry) => {
@@ -71,7 +72,7 @@ const criticalConfig = {
     rules: [
       {
         test: /\.scss$/,
-        use: extractSass.extract({
+        use: extractCriticalSass.extract({
           use: ['css-loader', 'sass-loader'],
           fallback: 'style-loader'
         })
