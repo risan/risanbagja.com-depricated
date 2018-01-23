@@ -15,7 +15,10 @@ const run = webpackConfig =>
     })
   );
 
-const watch = (webpackConfig, { onError = () => {}, onSuccess = () => {} } = {}) =>
+const watch = (
+  webpackConfig,
+  { onError = () => {}, onSuccess = () => {} } = {}
+) =>
   webpack(webpackConfig).watch(
     {
       ignored: /node_modules/

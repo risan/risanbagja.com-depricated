@@ -1,6 +1,5 @@
 const path = require('path');
 const chokidar = require('chokidar');
-const generate = require('./generate');
 
 const logChange = (type, filePath) => {
   switch (type) {

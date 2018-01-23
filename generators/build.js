@@ -5,10 +5,14 @@ const webpackCompiler = require('./webpack/compiler');
 const ENABLE_WATCH = process.argv.filter(arg => arg === '--watch').length > 0;
 
 const getArgument = (index = 0, defaultValue = null) =>
-  (process.argv.length >= (index + 3) && process.argv[index + 2] !== '--watch') ? process.argv[index + 2] : defaultValue;
+  process.argv.length >= index + 3 && process.argv[index + 2] !== '--watch'
+    ? process.argv[index + 2]
+    : defaultValue;
 
+/* eslint-disable import/no-dynamic-require */
 const config = require(`./../${getArgument(0, 'site.config.js')}`);
 const webpackConfig = require(`./../${getArgument(0, 'webpack.config.js')}`);
+/* eslint-enable import/no-dynamic-require */
 
 const build = () => {
   webpackCompiler

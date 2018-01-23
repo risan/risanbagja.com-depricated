@@ -27,10 +27,7 @@ const getWebpackCriticalConfig = config => {
         }
       ]
     },
-    plugins: [
-      extractCriticalSass,
-      new CleanScssBuildPlugin()
-    ]
+    plugins: [extractCriticalSass, new CleanScssBuildPlugin()]
   };
 
   if (IS_PRODUCTION) {

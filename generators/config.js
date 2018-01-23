@@ -3,9 +3,9 @@ class Config {
     this.data = data;
 
     // Allow easy access to the config data.
-    for (let prop in data) {
-      this[prop] = data[prop];
-    }
+    Object.entries(data).forEach(([key, value]) => {
+      this[key] = value;
+    });
   }
 }
 

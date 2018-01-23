@@ -7,7 +7,8 @@ module.exports = {
   url: 'http://localhost:8000',
   title: 'Risan Bagja Pradana',
   siteDescription: 'Tutorials, coding practice, and software craftmanship',
-  defaultMetaDescription: 'Risan Bagja Pradana is an experienced Javascript and PHP developer',
+  defaultMetaDescription:
+    'Risan Bagja Pradana is an experienced Javascript and PHP developer',
 
   socialLinks: {
     Github: 'https://github.com/risan',
@@ -22,7 +23,8 @@ module.exports = {
     locale: 'en_US',
     siteName: 'Risan Bagja Pradana',
     defaultImage: {
-      url: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80',
+      url:
+        'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80',
       width: 1200,
       height: 800
     }
@@ -33,7 +35,8 @@ module.exports = {
     type: 'summary_large_image',
     site: '@risanbagja',
     creator: '@risanbagja',
-    imageUrl: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80'
+    imageUrl:
+      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80'
   },
 
   // Where things are
@@ -52,7 +55,8 @@ module.exports = {
       perPage: 4,
       path: 'page:num.html'
     },
-    defaultFeaturedImageSmall: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=500&q=80'
+    defaultFeaturedImageSmall:
+      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=500&q=80'
   },
 
   // Markdown settings

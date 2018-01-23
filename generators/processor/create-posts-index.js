@@ -1,5 +1,6 @@
 const { URL } = require('url');
 const path = require('path');
+const fs = require('fs-extra');
 const MarkdownProcessor = require('./../markdown/processor');
 const generateUrl = require('./../file-util/generate-url');
 
@@ -66,10 +67,13 @@ const createPostsIndex = (posts, config) =>
   new Promise((resolve, reject) => {
     const baseUrl = new URL(config.posts.destinationDir, config.url);
 
-    const manifest = require(path.join(
-      config.destinationPath,
-      config.assets.destinationDir,
-      config.assets.manifest));
+    const manifest = fs.readJsonSync(
+      path.join(
+        config.destinationPath,
+        config.assets.destinationDir,
+        config.assets.manifest
+      )
+    );
 
     const pages = groupPostsByPage({
       posts,

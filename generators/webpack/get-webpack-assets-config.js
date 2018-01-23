@@ -14,7 +14,8 @@ const extractSass = new ExtractTextPlugin('[name].[contenthash].css');
 const getWebpackAssetsConfig = config => {
   const assetOutputPath = path.join(
     config.destinationPath,
-    config.assets.destinationDir);
+    config.assets.destinationDir
+  );
 
   const webpackConfig = {
     entry: normalizeEntries(config.assets.entries, config),
@@ -48,12 +49,12 @@ const getWebpackAssetsConfig = config => {
       ]
     },
     plugins: [
-      new CleanWebpackPlugin([
-        `${assetOutputPath}/*.css`,
-        `${assetOutputPath}/*.js`
-      ], {
-        allowExternal: true
-      }),
+      new CleanWebpackPlugin(
+        [`${assetOutputPath}/*.css`, `${assetOutputPath}/*.js`],
+        {
+          allowExternal: true
+        }
+      ),
       extractSass,
       new CleanScssBuildPlugin(),
       new ManifestPlugin({
