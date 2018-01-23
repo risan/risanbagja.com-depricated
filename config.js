@@ -62,6 +62,7 @@ module.exports = {
   assets: {
     sourceDir: 'assets',
     destinationDir: 'assets',
+    manifest: 'manifest.json',
     entries: {
       'posts-index': 'scss/posts-index.scss'
     }

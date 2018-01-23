@@ -3,8 +3,8 @@ html(lang='en')
   head
     include includes/head.pug
     style: include includes/posts-index-critical.css
-    link(rel='preload' href=`${config.url}/assets/posts-index.css` as='style' onload='this.onload=null;this.rel="stylesheet"')
-    noscript: link(rel='stylesheet' href=`${config.url}/assets/posts-index.css`)
+    link(rel='preload' href=manifest['posts-index.css'] as='style' onload='this.onload=null;this.rel="stylesheet"')
+    noscript: link(rel='stylesheet' href=manifest['posts-index.css'])
     script: include includes/css-rel-preload.js
   body
     div.container

@@ -3,13 +3,17 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const CleanScssBuildPlugin = require('./clean-scss-build-webpack-plugin');
 const config = require('./config');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 const extractSass = new ExtractTextPlugin('[name].[contenthash].css');
+
 const extractCriticalSass = new ExtractTextPlugin('[name].css');
+
+const assetOutputPath = path.join(config.destinationPath, config.assets.destinationDir);
 
 const normalizedEntries = entries =>
   Object.entries(entries).reduce((normalized, entry) => {
@@ -27,7 +31,7 @@ const assetsConfig = {
   entry: normalizedEntries(config.assets.entries),
   devtool: IS_PRODUCTION ? undefined : 'inline-source-map',
   output: {
-    path: path.join(config.destinationPath, config.assets.destinationDir),
+    path: assetOutputPath,
     filename: '[name].js'
   },
   module: {
@@ -56,10 +60,14 @@ const assetsConfig = {
   },
   plugins: [
     new CleanWebpackPlugin([
-      `${path.join(config.destinationPath, config.assets.destinationDir)}/*.*`
+      `${assetOutputPath}/*.css`,
+      `${assetOutputPath}/*.js`
     ]),
     extractSass,
-    new CleanScssBuildPlugin()
+    new CleanScssBuildPlugin(),
+    new ManifestPlugin({
+      publicPath: `${config.url}/${config.assets.destinationDir}/`
+    })
   ]
 };
 

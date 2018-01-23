@@ -66,6 +66,11 @@ const createPostsIndex = (posts, config) =>
   new Promise((resolve, reject) => {
     const baseUrl = new URL(config.posts.destinationDir, config.url);
 
+    const manifest = require(path.join(
+      config.destinationPath,
+      config.assets.destinationDir,
+      config.assets.manifest));
+
     const pages = groupPostsByPage({
       posts,
       perPage: config.posts.pagination.perPage,
@@ -104,7 +109,8 @@ const createPostsIndex = (posts, config) =>
           viewData: {
             config,
             posts: pagePosts,
-            pagination
+            pagination,
+            manifest
           }
         });
       })
