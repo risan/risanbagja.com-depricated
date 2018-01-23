@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CleanScssBuildPlugin = require('./clean-scss-build-webpack-plugin');
 const config = require('./config');
@@ -54,6 +55,9 @@ const assetsConfig = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin([
+      `${path.join(config.destinationPath, config.assets.destinationDir)}/*.*`
+    ]),
     extractSass,
     new CleanScssBuildPlugin()
   ]
