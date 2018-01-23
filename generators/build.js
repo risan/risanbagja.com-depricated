@@ -2,10 +2,13 @@ const generate = require('./generate');
 const watch = require('./watch');
 const webpackCompiler = require('./webpack/compiler');
 
-const config = require('./../site.config');
-const webpackConfig = require('./../webpack.config');
-
 const ENABLE_WATCH = process.argv.filter(arg => arg === '--watch').length > 0;
+
+const getArgument = (index = 0, defaultValue = null) =>
+  (process.argv.length >= (index + 3) && process.argv[index + 2] !== '--watch') ? process.argv[index + 2] : defaultValue;
+
+const config = require(`./../${getArgument(0, 'site.config.js')}`);
+const webpackConfig = require(`./../${getArgument(0, 'webpack.config.js')}`);
 
 const build = () => {
   webpackCompiler
