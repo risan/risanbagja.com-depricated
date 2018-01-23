@@ -1,6 +1,6 @@
-const config = require('./config');
-const generate = require('./generators/generate');
-const startWatcher = require('./generators/start-watcher');
+const config = require('./../site.config');
+const generate = require('./generate');
+const startWatcher = require('./start-watcher');
 const webpackRunner = require('./webpack-runner');
 
 const ENABLE_WATCH = process.argv.filter(arg => arg === '--watch').length > 0;
