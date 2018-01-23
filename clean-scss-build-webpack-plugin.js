@@ -4,7 +4,7 @@ const util = require('util');
 
 const unlink = util.promisify(fs.unlink);
 
-class DeleteJsFromScssBuildPlugin {
+class CleanScssBuildWebpackPlugin {
   static isChunkFromCssOrScss(chunk) {
     const sourceExtensions = chunk.origins.map(origin =>
       path.parse(origin.module.userRequest).ext);
@@ -32,16 +32,16 @@ class DeleteJsFromScssBuildPlugin {
   apply(compiler) {
     compiler.plugin('after-emit', (compilation, callback) => {
       const chunksFromCssOrScss = compilation.chunks.filter(chunk =>
-        DeleteJsFromScssBuildPlugin.isChunkFromCssOrScss(chunk));
+        CleanScssBuildWebpackPlugin.isChunkFromCssOrScss(chunk));
 
-      const uneededJsFiles = DeleteJsFromScssBuildPlugin.getJsFilesFromChunks(chunksFromCssOrScss);
+      const uneededJsFiles = CleanScssBuildWebpackPlugin.getJsFilesFromChunks(chunksFromCssOrScss);
 
       Promise.all(
         uneededJsFiles.map(file =>
           unlink(path.join(compilation.outputOptions.path, file))
         ))
         .then(() => {
-          DeleteJsFromScssBuildPlugin.logMessage(uneededJsFiles);
+          CleanScssBuildWebpackPlugin.logMessage(uneededJsFiles);
           callback();
         })
         .catch(err => console.error(err))
@@ -49,4 +49,4 @@ class DeleteJsFromScssBuildPlugin {
   }
 }
 
-module.exports = DeleteJsFromScssBuildPlugin;
+module.exports = CleanScssBuildWebpackPlugin;

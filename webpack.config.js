@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const DeleteJsFromScssBuildPlugin = require('./delete-js-from-scss-build-plugin');
+const CleanScssBuildPlugin = require('./clean-scss-build-webpack-plugin');
 const config = require('./config');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -54,7 +54,7 @@ const assetsConfig = {
   },
   plugins: [
     extractSass,
-    new DeleteJsFromScssBuildPlugin()
+    new CleanScssBuildPlugin()
   ]
 };
 
@@ -80,7 +80,7 @@ const criticalConfig = {
   },
   plugins: [
     extractSass,
-    new DeleteJsFromScssBuildPlugin()
+    new CleanScssBuildPlugin()
   ]
 };
 
