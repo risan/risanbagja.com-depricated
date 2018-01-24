@@ -1,3 +1,4 @@
+const Config = require('./config');
 const generate = require('./generate');
 const watch = require('./watch');
 const webpackCompiler = require('./webpack/compiler');
@@ -10,9 +11,11 @@ const getArgument = (index = 0, defaultValue = null) =>
     : defaultValue;
 
 /* eslint-disable import/no-dynamic-require */
-const config = require(`./../${getArgument(0, 'site.config.js')}`);
+const siteConfig = require(`./../${getArgument(0, 'site.config.js')}`);
 const webpackConfig = require(`./../${getArgument(0, 'webpack.config.js')}`);
 /* eslint-enable import/no-dynamic-require */
+
+const config = new Config(siteConfig);
 
 const build = () => {
   webpackCompiler

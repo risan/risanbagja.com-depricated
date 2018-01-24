@@ -1,7 +1,4 @@
-const { URL } = require('url');
 const path = require('path');
-const fs = require('fs-extra');
-const MarkdownProcessor = require('./../markdown/processor');
 const generateUrl = require('./../file-util/generate-url');
 
 const getPaginationUrl = ({ pageNumber, paginationPath, baseUrl }) => {
@@ -65,53 +62,33 @@ const groupPostsByPage = ({ posts, perPage, paginationPath, baseUrl }) => {
 
 const createPostsIndex = (posts, config) =>
   new Promise((resolve, reject) => {
-    const baseUrl = new URL(config.posts.destinationDir, config.url);
-
-    const manifest = fs.readJsonSync(
-      path.join(
-        config.destinationPath,
-        config.assets.destinationDir,
-        config.assets.manifest
-      )
-    );
+    const source = config.getPostsIndexSourcePath();
+    const manifest = config.getAssetsManifest();
 
     const pages = groupPostsByPage({
       posts,
-      perPage: config.posts.pagination.perPage,
-      paginationPath: config.posts.pagination.path,
-      baseUrl
+      perPage: config.getPostsPerPage(),
+      paginationPath: config.getPostsPaginationPath(),
+      baseUrl: config.getPostsBaseUrl()
     });
-
-    const markdownProcessor = new MarkdownProcessor({
-      defaultLayout: config.defaultLayout,
-      layoutsPath: path.join(config.sourcePath, config.layoutsDir),
-      defaultMinify: config.minifyOutput
-    });
-
-    const source = path.join(
-      config.sourcePath,
-      config.posts.sourceDir,
-      'index.md'
-    );
 
     Promise.all(
       pages.map(({ posts: pagePosts, pagination }) => {
         const filename = getPaginationFilename(
           pagination.number,
-          config.posts.pagination.path
+          config.getPostsPaginationPath()
         );
         const destination = path.join(
-          config.destinationPath,
-          config.posts.destinationDir,
+          config.getPostsDestinationPath(),
           filename
         );
 
-        return markdownProcessor.process({
+        return config.getMarkdownProcessor().process({
           source,
           destination,
           url: pagination.currentUrl,
           viewData: {
-            config,
+            config: config.getData(),
             posts: pagePosts,
             pagination,
             manifest

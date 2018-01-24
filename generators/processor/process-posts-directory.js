@@ -1,34 +1,26 @@
-const { URL } = require('url');
-const path = require('path');
 const getPostMarkdownFiles = require('./../file-util/get-post-markdown-files');
-const MarkdownProcessor = require('./../markdown/processor');
 const createPostsIndex = require('./create-posts-index');
 
 const processPostsDirectory = config =>
   new Promise((resolve, reject) =>
     getPostMarkdownFiles({
-      sourcePath: path.join(config.sourcePath, config.posts.sourceDir),
-      destinationPath: path.join(
-        config.destinationPath,
-        config.posts.destinationDir
-      ),
-      baseUrl: new URL(config.posts.destinationDir, config.url)
+      sourcePath: config.getPostsSourcePath(),
+      destinationPath: config.getPostsDestinationPath(),
+      baseUrl: config.getPostsBaseUrl()
     })
       .then(files => {
-        const markdownProcessor = new MarkdownProcessor({
-          defaultLayout: config.posts.defaultLayout,
-          layoutsPath: path.join(config.sourcePath, config.layoutsDir),
-          defaultMinify: config.minifyOutput
-        });
+        const manifest = config.getAssetsManifest();
 
         Promise.all(
           files.map(({ source, destination, url }) =>
-            markdownProcessor.process({
+            config.getMarkdownProcessor().process({
               source,
               destination,
               url,
+              defaultLayout: config.getPostsDefaultLayout(),
               viewData: {
-                config
+                config: config.getData(),
+                manifest
               }
             })
           )

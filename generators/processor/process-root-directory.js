@@ -1,12 +1,14 @@
-const { URL } = require('url');
-const path = require('path');
 const copyFile = require('./../file-util/copy-file');
 const getProcessableFiles = require('./../file-util/get-processable-files');
-const MarkdownProcessor = require('./../markdown/processor');
 
 const processRootDirectory = config =>
   new Promise((resolve, reject) =>
-    getProcessableFiles({ ...config, baseUrl: new URL(config.url) })
+    getProcessableFiles({
+      sourcePath: config.sourcePath,
+      destinationPath: config.destinationPath,
+      copyableFiles: config.copyableFiles,
+      baseUrl: config.url
+    })
       .then(({ markdownFiles, copyableFiles }) => {
         const copyFiles = Promise.all(
           copyableFiles.map(({ source, destination }) =>
@@ -14,20 +16,17 @@ const processRootDirectory = config =>
           )
         );
 
-        const markdownProcessor = new MarkdownProcessor({
-          defaultLayout: config.defaultLayout,
-          layoutsPath: path.join(config.sourcePath, config.layoutsDir),
-          defaultMinify: config.minifyOutput
-        });
+        const manifest = config.getAssetsManifest();
 
         const processMarkdownFiles = Promise.all(
           markdownFiles.map(({ source, destination, url }) =>
-            markdownProcessor.process({
+            config.getMarkdownProcessor().process({
               source,
               destination,
               url,
               viewData: {
-                config
+                config: config.getData(),
+                manifest
               }
             })
           )
