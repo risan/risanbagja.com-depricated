@@ -13,24 +13,23 @@ const getOutputFilename = file => {
 };
 
 const getPostMarkdownFiles = ({ sourcePath, destinationPath, baseUrl }) =>
-  new Promise((resolve, reject) => {
-    readdir(sourcePath)
-      .then(files => {
-        const markdowns = files.filter(isDatePrefixMarkdownFile);
+  new Promise(async (resolve, reject) => {
+    try {
+      const files = await readdir(sourcePath);
+      const markdowns = files.filter(isDatePrefixMarkdownFile);
 
-        resolve(
-          markdowns.map(file => {
-            const filename = getOutputFilename(file);
+      resolve(markdowns.map(file => {
+          const filename = getOutputFilename(file);
 
-            return {
-              source: path.join(sourcePath, file),
-              destination: path.join(destinationPath, filename),
-              url: generateUrl(filename, baseUrl)
-            };
-          })
-        );
-      })
-      .catch(err => reject(err));
+          return {
+            source: path.join(sourcePath, file),
+            destination: path.join(destinationPath, filename),
+            url: generateUrl(filename, baseUrl)
+          };
+        }));
+    } catch (err) {
+      reject(err);
+    }
   });
 
 module.exports = getPostMarkdownFiles;

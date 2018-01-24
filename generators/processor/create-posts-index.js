@@ -61,7 +61,7 @@ const groupPostsByPage = ({ posts, perPage, paginationPath, baseUrl }) => {
 };
 
 const createPostsIndex = (posts, config) =>
-  new Promise((resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     const source = config.getPostsIndexSourcePath();
     const manifest = config.getAssetsManifest();
 
@@ -72,32 +72,36 @@ const createPostsIndex = (posts, config) =>
       baseUrl: config.getPostsBaseUrl()
     });
 
-    Promise.all(
-      pages.map(({ posts: pagePosts, pagination }) => {
-        const filename = getPaginationFilename(
-          pagination.number,
-          config.getPostsPaginationPath()
-        );
-        const destination = path.join(
-          config.getPostsDestinationPath(),
-          filename
-        );
+    try {
+      const results = await Promise.all(
+        pages.map(({ posts: pagePosts, pagination }) => {
+          const filename = getPaginationFilename(
+            pagination.number,
+            config.getPostsPaginationPath()
+          );
+          const destination = path.join(
+            config.getPostsDestinationPath(),
+            filename
+          );
 
-        return config.getMarkdownProcessor().process({
-          source,
-          destination,
-          url: pagination.currentUrl,
-          viewData: {
-            config: config.getData(),
-            posts: pagePosts,
-            pagination,
-            manifest
-          }
-        });
-      })
-    )
-      .then(results => resolve(results))
-      .catch(err => reject(err));
+          return config.getMarkdownProcessor().process({
+            source,
+            destination,
+            url: pagination.currentUrl,
+            viewData: {
+              config: config.getData(),
+              posts: pagePosts,
+              pagination,
+              manifest
+            }
+          });
+        })
+      );
+
+      resolve(results);
+    } catch (err) {
+      reject(err);
+    }
   });
 
 module.exports = createPostsIndex;

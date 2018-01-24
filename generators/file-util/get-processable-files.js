@@ -13,31 +13,32 @@ const getProcessableFiles = ({
   copyableFiles = ['.html', '.ico'],
   baseUrl
 }) =>
-  new Promise((resolve, reject) => {
-    readdir(sourcePath)
-      .then(files => {
-        const markdowns = files.filter(isMarkdownFile);
-        const copyables = files.filter(file =>
-          shouldCopyFile(file, copyableFiles)
-        );
+  new Promise(async (resolve, reject) => {
+    try {
+      const files = await readdir(sourcePath);
+      const markdowns = files.filter(isMarkdownFile);
+      const copyables = files.filter(file =>
+        shouldCopyFile(file, copyableFiles)
+      );
 
-        resolve({
-          markdownFiles: markdowns.map(file => {
-            const filename = `${path.parse(file).name}.html`;
+      resolve({
+        markdownFiles: markdowns.map(file => {
+          const filename = `${path.parse(file).name}.html`;
 
-            return {
-              source: path.join(sourcePath, file),
-              destination: path.join(destinationPath, filename),
-              url: generateUrl(filename, baseUrl)
-            };
-          }),
-          copyableFiles: copyables.map(file => ({
+          return {
             source: path.join(sourcePath, file),
-            destination: path.join(destinationPath, file)
-          }))
-        });
-      })
-      .catch(err => reject(err));
+            destination: path.join(destinationPath, filename),
+            url: generateUrl(filename, baseUrl)
+          };
+        }),
+        copyableFiles: copyables.map(file => ({
+          source: path.join(sourcePath, file),
+          destination: path.join(destinationPath, file)
+        }))
+      });
+    } catch (err) {
+      reject(err);
+    }
   });
 
 module.exports = getProcessableFiles;

@@ -66,7 +66,7 @@ class CleanScssBuildWebpackPlugin {
 
   /* eslint-disable class-methods-use-this */
   apply(compiler) {
-    compiler.plugin('after-emit', (compilation, callback) => {
+    compiler.plugin('after-emit', async (compilation, callback) => {
       const emittedJsFiles = CleanScssBuildWebpackPlugin.getEmittedJsFiles(
         compilation.assets
       );
@@ -94,16 +94,16 @@ class CleanScssBuildWebpackPlugin {
         return callback();
       }
 
-      return Promise.all(
-        needsToBeRemoved.map(file =>
-          unlink(path.join(compilation.outputOptions.path, file))
-        )
-      )
-        .then(() => {
-          CleanScssBuildWebpackPlugin.logMessage(needsToBeRemoved);
-          callback();
-        })
-        .catch(err => console.error(err));
+      try {
+        await Promise.all(needsToBeRemoved.map(file =>
+          unlink(path.join(compilation.outputOptions.path, file))));
+
+        CleanScssBuildWebpackPlugin.logMessage(needsToBeRemoved);
+        return callback();
+      } catch (err) {
+        console.error(err);
+        return callback();
+      }
     });
     /* eslint-enable class-methods-use-this */
   }

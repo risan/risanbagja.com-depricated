@@ -19,34 +19,32 @@ class Processor {
     minify = this.defaultMinify,
     viewData = {}
   }) {
-    return new Promise((resolve, reject) => {
-      parseMarkdown(source)
-        .then(({ attributes, content }) => {
-          const { layout = defaultLayout } = attributes;
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { attributes, content } = await parseMarkdown(source);
+        const { layout = defaultLayout } = attributes;
+        const pugLayout = pug.compileFile(
+          path.join(this.layoutsPath, `${layout}.pug`)
+        );
 
-          const pugLayout = pug.compileFile(
-            path.join(this.layoutsPath, `${layout}.pug`)
-          );
+        let html = pugLayout({
+          ...attributes,
+          content,
+          url,
+          ...viewData
+        });
 
-          let html = pugLayout({
-            ...attributes,
-            content,
-            url,
-            ...viewData
+        if (minify) {
+          html = minifyHtml(html, {
+            collapseWhitespace: true
           });
+        }
 
-          if (minify) {
-            html = minifyHtml(html, {
-              collapseWhitespace: true
-            });
-          }
-
-          fs
-            .outputFile(destination, html)
-            .then(() => resolve({ ...attributes, url }))
-            .catch(err => reject(err));
-        })
-        .catch(err => reject(err));
+        await fs.outputFile(destination, html);
+        resolve({ ...attributes, url });
+      } catch (err) {
+        reject(err);
+      }
     });
   }
 }

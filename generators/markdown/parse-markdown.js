@@ -21,25 +21,26 @@ const getExcerptFromContent = content => {
 };
 
 const parseMarkdown = filePath =>
-  new Promise((resolve, reject) => {
-    readFile(filePath, { encoding: 'utf8' })
-      .then(data => {
-        const { attributes, body } = fm(data);
-        const content = md.render(body);
+  new Promise(async (resolve, reject) => {
+    try {
+      const data = await readFile(filePath, { encoding: 'utf8' });
+      const { attributes, body } = fm(data);
+      const content = md.render(body);
 
-        if (attributes.date) {
-          attributes.date = new Date(attributes.date);
-        } else {
-          attributes.date = getDateFromFilePath(filePath);
-        }
+      if (attributes.date) {
+        attributes.date = new Date(attributes.date);
+      } else {
+        attributes.date = getDateFromFilePath(filePath);
+      }
 
-        if (!attributes.excerpt) {
-          attributes.excerpt = getExcerptFromContent(content);
-        }
+      if (!attributes.excerpt) {
+        attributes.excerpt = getExcerptFromContent(content);
+      }
 
-        resolve({ attributes, content });
-      })
-      .catch(err => reject(err));
+      resolve({ attributes, content });
+    } catch(err) {
+      reject(err);
+    }
   });
 
 module.exports = parseMarkdown;

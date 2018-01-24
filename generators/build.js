@@ -17,26 +17,28 @@ const webpackConfig = require(`./../${getArgument(0, 'webpack.config.js')}`);
 
 const config = new Config(siteConfig);
 
-const build = () => {
-  webpackCompiler
-    .run(webpackConfig)
-    .then(stats => {
-      webpackCompiler.printStats(stats);
+const build = async () => {
+  try {
+    const stats = await webpackCompiler.run(webpackConfig);
+    webpackCompiler.printStats(stats);
+    console.log('🎉 Done bundling assets...');
 
-      console.log('🎉 Done bundling assets...');
-
-      return generate(config);
-    })
-    .then(() => console.log('🎉 Done generating static sites...'))
-    .catch(err => webpackCompiler.printError(err));
+    await generate(config);
+    console.log('🎉 Done generating static sites...')
+  } catch (err) {
+    webpackCompiler.printError(err)
+  }
 };
 
 const startWatcher = () => {
   watch(config, {
-    onChange: () => {
-      generate(config)
-        .then(() => console.log('🎉 Done generating static sites...'))
-        .catch(err => console.error(err));
+    onChange: async () => {
+      try {
+        await generate(config);
+        console.log('🎉 Done generating static sites...');
+      } catch (err) {
+        console.error(err);
+      }
     }
   });
 };
@@ -45,19 +47,20 @@ const buildAndWatch = () => {
   let firstTimeBuild = true;
 
   webpackCompiler.watch(webpackConfig, {
-    onSuccess: stats => {
+    onSuccess: async stats => {
       webpackCompiler.printStats(stats);
       console.log('🎉 Done bundling assets...');
 
       if (firstTimeBuild) {
         firstTimeBuild = false;
 
-        generate(config)
-          .then(() => {
-            console.log('🎉 Done generating static sites...');
-            startWatcher();
-          })
-          .catch(err => console.error(err));
+        try {
+          generate(config);
+          console.log('🎉 Done generating static sites...');
+          startWatcher();
+        } catch (err) {
+          console.error(err);
+        }
       }
     },
     onError: err => webpackCompiler.printError(err)
