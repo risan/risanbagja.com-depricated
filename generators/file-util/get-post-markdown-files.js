@@ -18,7 +18,8 @@ const getPostMarkdownFiles = ({ sourcePath, destinationPath, baseUrl }) =>
       const files = await readdir(sourcePath);
       const markdowns = files.filter(isDatePrefixMarkdownFile);
 
-      resolve(markdowns.map(file => {
+      resolve(
+        markdowns.map(file => {
           const filename = getOutputFilename(file);
 
           return {
@@ -26,7 +27,8 @@ const getPostMarkdownFiles = ({ sourcePath, destinationPath, baseUrl }) =>
             destination: path.join(destinationPath, filename),
             url: generateUrl(filename, baseUrl)
           };
-        }));
+        })
+      );
     } catch (err) {
       reject(err);
     }

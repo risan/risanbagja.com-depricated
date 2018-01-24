@@ -24,9 +24,9 @@ const build = async () => {
     console.log('🎉 Done bundling assets...');
 
     await generate(config);
-    console.log('🎉 Done generating static sites...')
+    console.log('🎉 Done generating static sites...');
   } catch (err) {
-    webpackCompiler.printError(err)
+    webpackCompiler.printError(err);
   }
 };
 

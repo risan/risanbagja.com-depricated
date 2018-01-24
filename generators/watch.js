@@ -1,4 +1,3 @@
-const path = require('path');
 const chokidar = require('chokidar');
 
 const logChange = (type, filePath) => {
@@ -20,13 +19,13 @@ const handleChange = ({ type, filePath, callback = () => {} }) => {
 };
 
 const watch = (config, { onReady = () => {}, onChange = () => {} } = {}) => {
-  const watcher = chokidar.watch([config.sourcePath, config.getAssetsManifestPath()], {
-    ignored: [
-      /(^|[/\\])\../,
-      config.getAssetsSourcePath()
-    ],
-    persistent: true
-  });
+  const watcher = chokidar.watch(
+    [config.sourcePath, config.getAssetsManifestPath()],
+    {
+      ignored: [/(^|[/\\])\../, config.getAssetsSourcePath()],
+      persistent: true
+    }
+  );
 
   watcher
     .on('ready', () => {

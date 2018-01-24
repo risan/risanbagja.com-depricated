@@ -27,7 +27,7 @@ const processPostsDirectory = config =>
         )
       );
 
-      await createPostsIndex(results, config)
+      await createPostsIndex(results, config);
 
       console.log('✅ Done processing posts directory...');
       resolve(true);

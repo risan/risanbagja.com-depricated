@@ -95,8 +95,11 @@ class CleanScssBuildWebpackPlugin {
       }
 
       try {
-        await Promise.all(needsToBeRemoved.map(file =>
-          unlink(path.join(compilation.outputOptions.path, file))));
+        await Promise.all(
+          needsToBeRemoved.map(file =>
+            unlink(path.join(compilation.outputOptions.path, file))
+          )
+        );
 
         CleanScssBuildWebpackPlugin.logMessage(needsToBeRemoved);
         return callback();

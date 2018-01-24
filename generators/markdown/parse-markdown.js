@@ -38,7 +38,7 @@ const parseMarkdown = filePath =>
       }
 
       resolve({ attributes, content });
-    } catch(err) {
+    } catch (err) {
       reject(err);
     }
   });
