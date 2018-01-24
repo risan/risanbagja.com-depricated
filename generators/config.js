@@ -37,6 +37,18 @@ class Config {
       siteConfig.assets.destinationDir,
       siteConfig.assets.manifest
     );
+    this.data.assets.baseUrl = generateUrl(
+      siteConfig.assets.destinationDir,
+      this.data.url
+    );
+
+    // Critical assets
+    this.data.criticalAssets.sourcePath = this.getSourcePath(
+      siteConfig.criticalAssets.sourceDir
+    );
+    this.data.criticalAssets.destinationPath = this.getSourcePath(
+      siteConfig.criticalAssets.destinationDir
+    );
 
     // Allow easy access to the config data.
     Object.entries(this.data).forEach(([key, value]) => {
@@ -76,10 +88,7 @@ class Config {
     });
   }
 
-  getAssetsManifest() {
-    return fs.readJsonSync(this.assets.manifestPath);
-  }
-
+  // Posts
   getPostsSourcePath() {
     return this.posts.sourcePath;
   }
@@ -106,6 +115,57 @@ class Config {
 
   getPostsPaginationPath() {
     return this.posts.pagination.path;
+  }
+
+  // Assets
+  getAssetsSourcePath() {
+    return this.assets.sourcePath;
+  }
+
+  getAssetsDestinationPath() {
+    return this.assets.destinationPath;
+  }
+
+  getAssetsEntries() {
+    return this.assets.entries;
+  }
+
+  getNormalizedAssetsEntries() {
+    return this.normalizeEntries(this.getAssetsEntries());
+  }
+
+  getAssetsBaseUrl() {
+    return this.assets.baseUrl;
+  }
+
+  getAssetsManifest() {
+    return fs.readJsonSync(this.assets.manifestPath);
+  }
+
+  // Critical assets
+  getCriticalAssetsSourcePath() {
+    return this.criticalAssets.sourcePath;
+  }
+
+  getCriticalAssetsDestinationPath() {
+    return this.criticalAssets.destinationPath;
+  }
+
+  getCriticalAssetsEntries() {
+    return this.criticalAssets.entries;
+  }
+
+  getNormalizedCriticalAssetsEntries() {
+    return this.normalizeEntries(this.getCriticalAssetsEntries());
+  }
+
+  normalizeEntries(entries) {
+    return Object.entries(entries).reduce((normalized, [entryName, file]) => {
+      const prop = {};
+      prop[entryName] = this.getSourcePath(this.assets.sourceDir, file);
+
+      return Object.assign({}, normalized, prop);
+    }, {});
   }
 }
 

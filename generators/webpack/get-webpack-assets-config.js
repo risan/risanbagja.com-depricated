@@ -1,24 +1,19 @@
-const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const CleanScssBuildPlugin = require('./clean-scss-build-webpack-plugin');
-const normalizeEntries = require('./normalize-entries');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 const extractSass = new ExtractTextPlugin('[name].[contenthash].css');
 
 const getWebpackAssetsConfig = config => {
-  const assetOutputPath = path.join(
-    config.destinationPath,
-    config.assets.destinationDir
-  );
+  const assetOutputPath = config.getAssetsDestinationPath();
 
   const webpackConfig = {
-    entry: normalizeEntries(config.assets.entries, config),
+    entry: config.getNormalizedAssetsEntries(),
     devtool: IS_PRODUCTION ? undefined : 'inline-source-map',
     output: {
       path: assetOutputPath,
@@ -58,7 +53,7 @@ const getWebpackAssetsConfig = config => {
       extractSass,
       new CleanScssBuildPlugin(),
       new ManifestPlugin({
-        publicPath: `${config.url}/${config.assets.destinationDir}/`
+        publicPath: `${config.getAssetsBaseUrl()}/`
       })
     ]
   };

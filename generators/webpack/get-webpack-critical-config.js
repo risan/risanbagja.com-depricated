@@ -1,9 +1,7 @@
-const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CleanScssBuildPlugin = require('./clean-scss-build-webpack-plugin');
-const normalizedEntries = require('./normalize-entries');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -11,9 +9,9 @@ const extractCriticalSass = new ExtractTextPlugin('[name].css');
 
 const getWebpackCriticalConfig = config => {
   const webpackConfig = {
-    entry: normalizedEntries(config.criticalAssets.entries, config),
+    entry: config.getNormalizedCriticalAssetsEntries(),
     output: {
-      path: path.join(config.sourcePath, config.criticalAssets.destinationDir),
+      path: config.getCriticalAssetsDestinationPath(),
       filename: '[name].js'
     },
     module: {
