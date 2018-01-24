@@ -138,8 +138,12 @@ class Config {
     return this.assets.baseUrl;
   }
 
+  getAssetsManifestPath() {
+    return this.assets.manifestPath;
+  }
+
   getAssetsManifest() {
-    return fs.readJsonSync(this.assets.manifestPath);
+    return fs.readJsonSync(this.getAssetsManifestPath());
   }
 
   // Critical assets

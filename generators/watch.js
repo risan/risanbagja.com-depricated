@@ -20,10 +20,10 @@ const handleChange = ({ type, filePath, callback = () => {} }) => {
 };
 
 const watch = (config, { onReady = () => {}, onChange = () => {} } = {}) => {
-  const watcher = chokidar.watch(config.sourcePath, {
+  const watcher = chokidar.watch([config.sourcePath, config.getAssetsManifestPath()], {
     ignored: [
       /(^|[/\\])\../,
-      path.join(config.sourcePath, config.assets.sourceDir)
+      config.getAssetsSourcePath()
     ],
     persistent: true
   });
