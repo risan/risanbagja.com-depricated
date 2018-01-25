@@ -2,6 +2,8 @@
 @import 'common';
 @import 'syntax';
 
+$spacing: 1.2rem;
+
 .container {
     max-width: 42rem;
 }
@@ -11,7 +13,7 @@
     line-height: 1.6;
 
     @media (min-width: $screen-sm-min) {
-        font-size: 1.2rem;
+        font-size: 1.2;
         line-height: 1.7;
     }
 
@@ -19,7 +21,7 @@
     h1 {
         font-size: 2.2rem;
         line-height: 1.1;
-        margin: 0 0 1.2rem 0;
+        margin: 0 0 $spacing 0;
 
         @media (min-width: $screen-sm-min) {
             font-size: 2.5rem;
@@ -43,7 +45,7 @@
     }
 
     p {
-        margin: 0 0 1.2rem 0;
+        margin: 0 0 $spacing 0;
     }
 
     img {
@@ -52,8 +54,8 @@
     }
 
     ul, ol {
-        padding: 0 0 0 1.2rem;
-        margin: 0 0 1.2rem 0;
+        padding: 0 0 0 $spacing;
+        margin: 0 0 $spacing 0;
 
         @media (min-width: $screen-sm-min) {
             padding: 0 0 0 2.8rem;
@@ -70,8 +72,8 @@
     }
 
     blockquote {
-        padding: 1.2rem;
-        margin: 0 0 1.2rem 0;
+        padding: $spacing;
+        margin: 0 0 $spacing 0;
         background: #fff2b3;
         border-left: 8px solid #ffd05b;
 
@@ -81,7 +83,7 @@
     }
 
     pre, code {
-        font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-family: $font-family-monospace;
     }
 
     a:link code,
@@ -91,7 +93,7 @@
 
     a:active code,
     a:hover code {
-         color: $link-color-hover;
+        color: $link-color-hover;
     }
 
     p, li {
@@ -113,7 +115,7 @@
     pre {
         font-size: .8rem;
         line-height: 1.5;
-        margin: 0 0 1.2rem 0;
+        margin: 0 0 $spacing 0;
 
         code {
             display: block;

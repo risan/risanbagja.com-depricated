@@ -79,7 +79,8 @@ module.exports = {
     destinationDir: 'layouts/includes', // Relative to sourcePath
     entries: {
       'home-critical': 'scss/home-critical.scss',
-      'posts-index-critical': 'scss/posts-index-critical.scss'
+      'posts-index-critical': 'scss/posts-index-critical.scss',
+      'post-critical': 'scss/post-critical.scss'
     }
   }
 };

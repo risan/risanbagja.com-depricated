@@ -2,7 +2,10 @@ doctype html
 html(lang='en')
   head
     include includes/head.pug
-    link(rel='stylesheet' href=manifest['post.css'])
+    style: include includes/post-critical.css
+    link(rel='preload' href=manifest['post.css'] as='style' onload='this.onload=null;this.rel="stylesheet"')
+    noscript: link(rel='stylesheet' href=manifest['post.css'])
+    script: include includes/css-rel-preload.js
   body
     div.container
       header.header
