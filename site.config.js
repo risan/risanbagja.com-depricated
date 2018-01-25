@@ -68,7 +68,8 @@ module.exports = {
     destinationDir: 'assets',
     manifest: 'manifest.json',
     entries: {
-      'posts-index': 'scss/posts-index.scss'
+      'posts-index': 'scss/posts-index.scss',
+      'post': 'scss/post.scss'
     }
   },
 

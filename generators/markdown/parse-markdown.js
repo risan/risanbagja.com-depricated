@@ -2,11 +2,23 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 const fm = require('front-matter');
+const hljs = require('highlight.js');
 const MarkdownIt = require('markdown-it');
+const markdownItNamedHeadings = require('markdown-it-named-headings');
 const isDatePrefixMarkdownFile = require('./../file-util/is-date-prefix-markdown-file');
 
 const readFile = util.promisify(fs.readFile);
-const md = new MarkdownIt();
+
+const md = new MarkdownIt({
+  highlight: (str, lang) => {
+    const { value, language } = (lang  && hljs.getLanguage(lang)) ?
+      hljs.highlight(lang, str) : hljs.highlightAuto(str);
+
+    return `<pre><code class="hljs ${language}">${value}</code></pre>`;
+  }
+});
+
+md.use(markdownItNamedHeadings);
 
 const getDateFromFilePath = filePath => {
   const { base } = path.parse(filePath);

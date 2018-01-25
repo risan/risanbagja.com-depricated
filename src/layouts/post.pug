@@ -2,10 +2,14 @@ doctype html
 html(lang='en')
   head
     include includes/head.pug
+    link(rel='stylesheet' href=manifest['post.css'])
   body
     div.container
       header.header
         div.header-title: a(href='/')= config.title
         div.header-site-description= config.siteDescription
       include includes/nav.pug
-      main.article!= content
+      main.article
+        h1= title
+        | !{content}
+      include includes/footer.pug

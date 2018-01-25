@@ -1,0 +1,126 @@
+@import 'variables';
+@import 'common';
+@import 'syntax';
+
+.container {
+    max-width: 42rem;
+}
+
+.article {
+    font-size: 1.1rem;
+    line-height: 1.6;
+
+    @media (min-width: $screen-sm-min) {
+        font-size: 1.2rem;
+        line-height: 1.7;
+    }
+
+    // Typography
+    h1 {
+        font-size: 2.2rem;
+        line-height: 1.1;
+        margin: 0 0 1.2rem 0;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: 2.5rem;
+        }
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin: 1.8rem 0 .6rem 0;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+        line-height: 1.2;
+        margin: 1.8rem 0 .6rem 0;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    p {
+        margin: 0 0 1.2rem 0;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    ul, ol {
+        padding: 0 0 0 1.2rem;
+        margin: 0 0 1.2rem 0;
+
+        @media (min-width: $screen-sm-min) {
+            padding: 0 0 0 2.8rem;
+        }
+    }
+
+    li {
+        line-height: 1.5;
+        margin-bottom: .6rem;
+
+        @media (min-width: $screen-sm-min) {
+            line-height: 1.6;
+        }
+    }
+
+    blockquote {
+        padding: 1.2rem;
+        margin: 0 0 1.2rem 0;
+        background: #fff2b3;
+        border-left: 8px solid #ffd05b;
+
+        p:last-child {
+            margin: 0;
+        }
+    }
+
+    pre, code {
+        font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    a:link code,
+    a:visited code {
+        color: $link-color;
+    }
+
+    a:active code,
+    a:hover code {
+         color: $link-color-hover;
+    }
+
+    p, li {
+        code {
+            font-size: 80%;
+            color: #363636;
+            padding: 0.2rem 0.4rem;
+            background: #f1efd5;
+            border-radius: 3px;
+        }
+    }
+
+    blockquote {
+        code {
+            background: #ece2ab;
+        }
+    }
+
+    pre {
+        font-size: .8rem;
+        line-height: 1.5;
+        margin: 0 0 1.2rem 0;
+
+        code {
+            display: block;
+            overflow-x: auto;
+            color: #e4e0e0;
+            padding: 1rem;
+            background: $font-color;
+        }
+    }
+}
