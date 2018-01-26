@@ -1,6 +1,7 @@
 const path = require('path');
 const pug = require('pug');
 const fs = require('fs-extra');
+const dateFormat = require('date-fns/format');
 const minifyHtml = require('html-minifier').minify;
 const parseMarkdown = require('./parse-markdown');
 
@@ -31,7 +32,8 @@ class Processor {
           ...attributes,
           content,
           url,
-          ...viewData
+          ...viewData,
+          dateFormat
         });
 
         if (minify) {

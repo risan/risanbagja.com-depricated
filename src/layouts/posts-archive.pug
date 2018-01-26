@@ -3,7 +3,9 @@ html(lang='en')
   head
     include includes/head.pug
     style: include includes/posts-archive-critical.css
-    link(rel='stylesheet' href=manifest['posts-archive.css'])
+    link(rel='preload' href=manifest['posts-archive.css'] as='style' onload='this.onload=null;this.rel="stylesheet"')
+    noscript: link(rel='stylesheet' href=manifest['posts-archive.css'])
+    script: include includes/css-rel-preload.js
   body
     div.container
       header.header

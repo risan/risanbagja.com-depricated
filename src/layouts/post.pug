@@ -13,6 +13,8 @@ html(lang='en')
         div.header-site-description= config.siteDescription
       include includes/nav.pug
       main.article
-        h1= title
+        header
+          h1= title
+          time.article-date(datetime=dateFormat(date, 'YYYY-MM-DD') pubdate)= dateFormat(date, 'DD MMMM YYYY')
         | !{content}
       include includes/footer.pug
