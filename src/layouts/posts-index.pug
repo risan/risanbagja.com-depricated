@@ -17,7 +17,7 @@ html(lang='en')
         each post in posts
           article.article
             a.article-link(href= post.url)
-              div.article-img(style=`background-image: url("${post.featuredImageSmall || config.posts.defaultFeaturedImageSmall}")`)
+              img.article-img(src=post.featuredImageSmall || config.posts.defaultFeaturedImageSmall)
               h2.article-title= post.title
               p.article-excerpt= post.excerpt
 
@@ -29,3 +29,4 @@ html(lang='en')
               a.pagination-link.btn(href= pagination.nextUrl) Older Posts &rarr;
 
       include includes/footer.pug
+    script(async src='https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.1/lazysizes.min.js')

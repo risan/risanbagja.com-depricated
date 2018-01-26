@@ -42,19 +42,25 @@
 
 .article-link {
     display: block;
-    color: $font-color;
     text-decoration: none;
+
+    &:active,
+    &:hover,
+    &:link,
+    &:visited  {
+        color: $font-color;
+    }
 }
 
 .article-img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
     height: 175px;
     margin-bottom: .5rem;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
     background-color: #8785A2;
 
-    @media (min-width: $screen-md-min) {
+     @media (min-width: $screen-md-min) {
         height: 200px;
     }
 }
