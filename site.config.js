@@ -69,6 +69,7 @@ module.exports = {
     manifest: 'manifest.json',
     entries: {
       'posts-index': 'scss/posts-index.scss',
+      'posts-archive': 'scss/posts-archive.scss',
       'post': 'scss/post.scss'
     }
   },
@@ -80,6 +81,7 @@ module.exports = {
     entries: {
       'home-critical': 'scss/home-critical.scss',
       'posts-index-critical': 'scss/posts-index-critical.scss',
+      'posts-archive-critical': 'scss/posts-archive-critical.scss',
       'post-critical': 'scss/post-critical.scss'
     }
   }

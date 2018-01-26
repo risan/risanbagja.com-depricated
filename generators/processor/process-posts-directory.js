@@ -1,5 +1,6 @@
 const getPostMarkdownFiles = require('./../file-util/get-post-markdown-files');
 const createPostsIndex = require('./create-posts-index');
+const createPostsArchive = require('./create-posts-archive');
 
 const processPostsDirectory = config =>
   new Promise(async (resolve, reject) => {
@@ -27,7 +28,10 @@ const processPostsDirectory = config =>
         )
       );
 
-      await createPostsIndex(results, config);
+      await Promise.all([
+        createPostsIndex(results, config),
+        createPostsArchive(results, config)
+      ]);
 
       console.log('✅ Done processing posts directory...');
       resolve(true);

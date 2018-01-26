@@ -1,0 +1,42 @@
+@import 'variables';
+@import 'common-critical';
+
+.container {
+    max-width: 40rem;
+}
+
+.header-title {
+    font-size: 1.2rem;
+}
+
+.header-site-description {
+    font-size: 1rem;
+}
+
+.archive {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.archive-title {
+    font-size: 2.2rem;
+    line-height: 1;
+    margin: 0 0 1.5rem 0;
+}
+
+.archive-list {
+    padding: 0 0 0 1.2rem;
+    margin: 0 0 1rem 0;
+
+    @media (min-width: $screen-sm-min) {
+        padding: 0 0 0 2rem;
+    }
+}
+
+.archive-item {
+    margin-bottom: .5rem;
+}
+
+.archive-link {
+    text-decoration: none;
+}

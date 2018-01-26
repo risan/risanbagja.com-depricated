@@ -39,6 +39,10 @@ const parseMarkdown = filePath =>
       const { attributes, body } = fm(data);
       const content = md.render(body);
 
+      if (typeof attributes.tags === 'string') {
+        attributes.tags = [attributes.tags];
+      }
+
       if (attributes.date) {
         attributes.date = new Date(attributes.date);
       } else {

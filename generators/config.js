@@ -26,6 +26,17 @@ class Config {
       'index.md'
     );
 
+    this.data.posts.archiveSourcePath = this.getSourcePath(
+      siteConfig.posts.sourceDir,
+      'archive.md'
+    );
+    this.data.posts.archiveDestinationPath = this.getDestinationPath(
+      siteConfig.posts.destinationDir, 'archive.html'
+    );
+    this.data.posts.archiveUrl = generateUrl(
+      'archive.html', this.data.posts.baseUrl
+    );
+
     // Assets
     this.data.assets.sourcePath = this.getSourcePath(
       siteConfig.assets.sourceDir
@@ -115,6 +126,18 @@ class Config {
 
   getPostsPaginationPath() {
     return this.posts.pagination.path;
+  }
+
+  getPostsArchiveSourcePath() {
+    return this.posts.archiveSourcePath;
+  }
+
+  getPostsArchiveDestinationPath() {
+    return this.posts.archiveDestinationPath;
+  }
+
+  getPostsArchiveUrl() {
+    return this.posts.archiveUrl;
   }
 
   // Assets

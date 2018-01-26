@@ -1,0 +1,19 @@
+doctype html
+html(lang='en')
+  head
+    include includes/head.pug
+    style: include includes/posts-archive-critical.css
+    link(rel='stylesheet' href=manifest['posts-archive.css'])
+  body
+    div.container
+      header.header
+        div.header-title: a(href='/')= config.title
+        div.header-site-description= config.siteDescription
+      include includes/nav.pug
+
+      main.archive
+        h1.archive-title Blog Archive
+        ul.archive-list: each post in posts
+          li.archive-item: a.archive-link(href= post.url)= post.title
+
+      include includes/footer.pug
