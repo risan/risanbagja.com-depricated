@@ -61,6 +61,11 @@ $spacing: 1.2rem;
         display: block;
         margin: 0 auto;
         max-width: 100%;
+
+        .lazyload,
+        .lazyloading {
+            height: 200px;
+        }
     }
 
     pre {

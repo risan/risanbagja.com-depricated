@@ -61,6 +61,9 @@ module.exports = {
 
   // Markdown settings
   minifyOutput: IS_PRODUCTION,
+  lazyloadImage: {
+    initialSrc: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEWHhaI9LJ4VAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg=='
+  },
 
   // Assets settings
   assets: {

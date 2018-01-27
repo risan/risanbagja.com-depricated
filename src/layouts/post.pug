@@ -1,10 +1,11 @@
 doctype html
-html(lang='en')
+html.no-js(lang='en')
   head
     include includes/head.pug
     style: include includes/post-critical.css
     link(rel='preload' href=manifest['post.css'] as='style' onload='this.onload=null;this.rel="stylesheet"')
     noscript: link(rel='stylesheet' href=manifest['post.css'])
+    script: include includes/enable-js-class.js
     script: include includes/css-rel-preload.js
   body
     div.container

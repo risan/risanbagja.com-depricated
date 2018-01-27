@@ -1,10 +1,11 @@
 doctype html
-html(lang='en')
+html.no-js(lang='en')
   head
     include includes/head.pug
     style: include includes/posts-index-critical.css
     link(rel='preload' href=manifest['posts-index.css'] as='style' onload='this.onload=null;this.rel="stylesheet"')
     noscript: link(rel='stylesheet' href=manifest['posts-index.css'])
+    script: include includes/enable-js-class.js
     script: include includes/css-rel-preload.js
   body
     div.container
@@ -18,9 +19,14 @@ html(lang='en')
           article.article
             a.article-link(href= post.url)
               img.article-img.lazyload(
-                src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEWHhaI9LJ4VAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg=='
+                src=config.lazyloadImage.initialSrc
                 data-src=post.featuredImageSmall || config.posts.defaultFeaturedImageSmall
-                alt=post.title)
+                alt=post.title
+              )
+              noscript: img.article-img(
+                src=post.featuredImageSmall || config.posts.defaultFeaturedImageSmall
+                alt=post.title
+              )
               h2.article-title= post.title
               p.article-excerpt= post.excerpt
 

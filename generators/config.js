@@ -97,7 +97,8 @@ class Config {
     return new MarkdownProcessor({
       defaultLayout: this.defaultLayout,
       layoutsPath: this.layoutPath,
-      defaultMinify: this.minifyOutput
+      defaultMinify: this.minifyOutput,
+      lazyloadImage: this.lazyloadImage
     });
   }
 

@@ -3,13 +3,14 @@ const pug = require('pug');
 const fs = require('fs-extra');
 const dateFormat = require('date-fns/format');
 const minifyHtml = require('html-minifier').minify;
-const parseMarkdown = require('./parse-markdown');
+const MarkdownParser = require('./markdown-parser');
 
 class Processor {
-  constructor({ defaultLayout, layoutsPath, defaultMinify = false }) {
+  constructor({ defaultLayout, layoutsPath, defaultMinify = false, lazyloadImage = false }) {
     this.defaultLayout = defaultLayout;
     this.layoutsPath = layoutsPath;
     this.defaultMinify = defaultMinify;
+    this.markdownParser = new MarkdownParser({ lazyloadImage });
   }
 
   process({
@@ -22,7 +23,7 @@ class Processor {
   }) {
     return new Promise(async (resolve, reject) => {
       try {
-        const { attributes, content } = await parseMarkdown(source);
+        const { attributes, content } = await this.markdownParser.parse(source);
         const { layout = defaultLayout } = attributes;
         const pugLayout = pug.compileFile(
           path.join(this.layoutsPath, `${layout}.pug`)

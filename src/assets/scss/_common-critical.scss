@@ -24,6 +24,13 @@ a:visited {
     color: $link-color;
 }
 
+// Lazyload
+.no-js {
+    img.lazyload {
+        display: none;
+    }
+}
+
 // Button
 .btn {
     display: block;

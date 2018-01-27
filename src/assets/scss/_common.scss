@@ -29,6 +29,13 @@ a:active {
     color: $link-color-hover;
 }
 
+// Lazyload
+.no-js {
+    img.lazyload {
+        display: none;
+    }
+}
+
 // Button
 .btn {
     display: block;
