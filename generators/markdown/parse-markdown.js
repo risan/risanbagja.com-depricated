@@ -12,8 +12,10 @@ const readFile = util.promisify(fs.readFile);
 
 const md = new MarkdownIt({
   highlight: (str, lang) => {
-    const { value, language } = (lang  && hljs.getLanguage(lang)) ?
-      hljs.highlight(lang, str) : hljs.highlightAuto(str);
+    const { value, language } =
+      lang && hljs.getLanguage(lang)
+        ? hljs.highlight(lang, str)
+        : hljs.highlightAuto(str);
 
     return `<pre><code class="hljs ${language}">${value}</code></pre>`;
   }

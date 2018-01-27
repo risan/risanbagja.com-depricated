@@ -70,7 +70,7 @@ module.exports = {
     entries: {
       'posts-index': 'scss/posts-index.scss',
       'posts-archive': 'scss/posts-archive.scss',
-      'post': 'scss/post.scss'
+      post: 'scss/post.scss'
     }
   },
 

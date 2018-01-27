@@ -31,10 +31,12 @@ class Config {
       'archive.md'
     );
     this.data.posts.archiveDestinationPath = this.getDestinationPath(
-      siteConfig.posts.destinationDir, 'archive.html'
+      siteConfig.posts.destinationDir,
+      'archive.html'
     );
     this.data.posts.archiveUrl = generateUrl(
-      'archive.html', this.data.posts.baseUrl
+      'archive.html',
+      this.data.posts.baseUrl
     );
 
     // Assets

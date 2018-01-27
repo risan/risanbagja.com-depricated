@@ -1,5 +1,3 @@
-const path = require('path');
-
 const createPostsArchive = (posts, config) =>
   config.getMarkdownProcessor().process({
     source: config.getPostsArchiveSourcePath(),
