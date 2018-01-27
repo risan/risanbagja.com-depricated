@@ -36,7 +36,7 @@ module.exports = {
     site: '@risanbagja',
     creator: '@risanbagja',
     imageUrl:
-      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&q=80'
+      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=1200&q=80'
   },
 
   // Where things are
@@ -56,13 +56,14 @@ module.exports = {
       path: 'page:num.html'
     },
     defaultFeaturedImageSmall:
-      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=500&q=80'
+      'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&q=80'
   },
 
   // Markdown settings
   minifyOutput: IS_PRODUCTION,
   lazyloadImage: {
-    initialSrc: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEWHhaI9LJ4VAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg=='
+    initialSrc:
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEWHhaI9LJ4VAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg=='
   },
 
   // Assets settings

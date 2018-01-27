@@ -9,7 +9,7 @@ html(lang='en')
   body
     div.container
       header.header
-        div.header-title: a(href='/')= config.title
+        div.header-title: a(href= config.url)= config.title
         div.header-site-description= config.siteDescription
       include includes/nav.pug
 

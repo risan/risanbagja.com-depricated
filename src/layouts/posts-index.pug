@@ -10,7 +10,7 @@ html.no-js(lang='en')
   body
     div.container
       header.header
-        h1.header-title: a(href='/')= config.title
+        h1.header-title: a(href= config.url)= config.title
         h2.header-site-description= config.siteDescription
       include includes/nav.pug
 
