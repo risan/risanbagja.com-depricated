@@ -23,7 +23,7 @@ stacks.
 I'm from Indonesia but currently resides in Stockholm, Sweden. You can reach me
 at [risanbagja@gmail.com](mailto:risanbagja@gmail.com).
 
-* [Blog](blog)
+* [Blog](/blog)
 * [Github](https://github.com/risan)
 * [Stackoverflow](https://stackoverflow.com/users/5138222)
 * [Medium](https://medium.com/risan)
