@@ -6,7 +6,12 @@ const minifyHtml = require('html-minifier').minify;
 const MarkdownParser = require('./markdown-parser');
 
 class Processor {
-  constructor({ defaultLayout, layoutsPath, defaultMinify = false, lazyloadImage = false }) {
+  constructor({
+    defaultLayout,
+    layoutsPath,
+    defaultMinify = false,
+    lazyloadImage = false
+  }) {
     this.defaultLayout = defaultLayout;
     this.layoutsPath = layoutsPath;
     this.defaultMinify = defaultMinify;

@@ -31,8 +31,10 @@ class MarkdownParser {
     md.use(markdownItNamedHeadings);
 
     if (lazyloadImage) {
-      md.use(markdownItLazysizes,
-        typeof lazyloadImage === 'object' ? lazyloadImage : {});
+      md.use(
+        markdownItLazysizes,
+        typeof lazyloadImage === 'object' ? lazyloadImage : {}
+      );
     }
 
     return md;
@@ -70,13 +72,13 @@ class MarkdownParser {
     const matchedFirstParagraph = content.match(/<p[^>]*>([\s\S]*?)<\/p>/);
 
     return matchedFirstParagraph === null ? null : matchedFirstParagraph[1];
-  };
+  }
 
   static getDateFromFilePath(filePath) {
     const { base } = path.parse(filePath);
 
     return isDatePrefixMarkdownFile(base) ? new Date(base.slice(0, 10)) : null;
-  };
+  }
 }
 
 module.exports = MarkdownParser;
