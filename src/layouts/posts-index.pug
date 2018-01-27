@@ -17,7 +17,10 @@ html(lang='en')
         each post in posts
           article.article
             a.article-link(href= post.url)
-              img.article-img(src=post.featuredImageSmall || config.posts.defaultFeaturedImageSmall)
+              img.article-img.lazyload(
+                src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEWHhaI9LJ4VAAAACklEQVR4nGNiAAAABgADNjd8qAAAAABJRU5ErkJggg=='
+                data-src=post.featuredImageSmall || config.posts.defaultFeaturedImageSmall
+                alt=post.title)
               h2.article-title= post.title
               p.article-excerpt= post.excerpt
 
@@ -29,3 +32,4 @@ html(lang='en')
               a.pagination-link.btn(href= pagination.nextUrl) Older Posts &rarr;
 
       include includes/footer.pug
+      script(src='https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.1/lazysizes.min.js' async)

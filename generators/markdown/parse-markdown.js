@@ -5,6 +5,7 @@ const fm = require('front-matter');
 const hljs = require('highlight.js');
 const MarkdownIt = require('markdown-it');
 const markdownItNamedHeadings = require('markdown-it-named-headings');
+const markdownItLazysizes = require('./markdown-it-lazysizes');
 const isDatePrefixMarkdownFile = require('./../file-util/is-date-prefix-markdown-file');
 
 const readFile = util.promisify(fs.readFile);
@@ -19,6 +20,7 @@ const md = new MarkdownIt({
 });
 
 md.use(markdownItNamedHeadings);
+md.use(markdownItLazysizes);
 
 const getDateFromFilePath = filePath => {
   const { base } = path.parse(filePath);
