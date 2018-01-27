@@ -20,7 +20,7 @@
     "website"
   ],
   "engines": {
-    "node": ">= 6"
+    "node": ">= 8.9.3"
   },
   "scripts": {
     "production": "NODE_ENV=production node build.js",
