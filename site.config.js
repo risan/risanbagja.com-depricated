@@ -44,7 +44,7 @@ module.exports = {
   destinationPath: path.resolve(__dirname, 'public'),
   layoutsDir: 'layouts',
   defaultLayout: 'default',
-  copyableFiles: ['.ico', '.html', 'robot.txt'],
+  copyableFiles: ['.ico', '.html', 'robot.txt', 'manifest.json'],
 
   // Posts settings
   posts: {
