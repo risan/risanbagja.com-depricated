@@ -27,8 +27,8 @@
     "build": "node generators/build.js",
     "watch": "node generators/build.js --watch",
     "webpack": "webpack --progress --hide-modules",
-    "lint": "eslint *.js generators",
-    "lint-fix": "eslint *.js generators --fix"
+    "lint": "eslint *.js src/assets/js generators",
+    "lint-fix": "eslint *.js src/assets/js generators --fix"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-beta.38",
