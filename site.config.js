@@ -82,7 +82,7 @@ module.exports = {
       'register-service-worker': 'js/register-service-worker.js',
       'posts-index': 'scss/posts-index.scss',
       'posts-archive': 'scss/posts-archive.scss',
-      'post': 'scss/post.scss'
+      post: 'scss/post.scss'
     }
   },
 
