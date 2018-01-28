@@ -5,3 +5,4 @@ html(lang='en')
     style: include includes/home-critical.css
   body
     div.container!= content
+    script(src=manifest['register-service-worker.js'] async)

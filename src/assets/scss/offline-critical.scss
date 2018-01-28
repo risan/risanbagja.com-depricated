@@ -1,0 +1,14 @@
+@import 'home-critical';
+
+blockquote {
+    font-size: 1rem;
+    color: #fff;
+    padding: 1rem;
+    margin: 0 0 1rem 0;
+    background: #dc2f2f;
+    border-left: 8px solid #b32121;
+
+    p:last-child {
+        margin: 0;
+    }
+}

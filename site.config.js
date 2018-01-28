@@ -44,7 +44,14 @@ module.exports = {
   destinationPath: path.resolve(__dirname, 'public'),
   layoutsDir: 'layouts',
   defaultLayout: 'default',
-  copyableFiles: ['.ico', '.html', 'robot.txt', 'manifest.json'],
+  copyableFiles: [
+    '.ico',
+    '.png',
+    '.html',
+    'robot.txt',
+    'manifest.json',
+    'service-worker.js'
+  ],
 
   // Posts settings
   posts: {
@@ -72,9 +79,10 @@ module.exports = {
     destinationDir: 'assets',
     manifest: 'manifest.json',
     entries: {
+      'register-service-worker': 'js/register-service-worker.js',
       'posts-index': 'scss/posts-index.scss',
       'posts-archive': 'scss/posts-archive.scss',
-      post: 'scss/post.scss'
+      'post': 'scss/post.scss'
     }
   },
 
@@ -84,6 +92,7 @@ module.exports = {
     destinationDir: 'layouts/includes', // Relative to sourcePath
     entries: {
       'home-critical': 'scss/home-critical.scss',
+      'offline-critical': 'scss/offline-critical.scss',
       'posts-index-critical': 'scss/posts-index-critical.scss',
       'posts-archive-critical': 'scss/posts-archive-critical.scss',
       'post-critical': 'scss/post-critical.scss'

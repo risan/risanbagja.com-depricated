@@ -38,4 +38,6 @@ html.no-js(lang='en')
               a.pagination-link.btn(href= pagination.nextUrl) Older Posts &rarr;
 
       include includes/footer.pug
-      script(src='https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.1/lazysizes.min.js' async)
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.1/lazysizes.min.js' async)
+    script(src=manifest['register-service-worker.js'] async)

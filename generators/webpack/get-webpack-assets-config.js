@@ -17,10 +17,22 @@ const getWebpackAssetsConfig = config => {
     devtool: IS_PRODUCTION ? undefined : 'inline-source-map',
     output: {
       path: assetOutputPath,
-      filename: '[name].js'
+      filename: '[name].[hash].js'
     },
     module: {
       rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env'
+              ]
+            }
+          }
+        },
         {
           test: /\.scss$/,
           use: extractSass.extract({
@@ -44,6 +56,9 @@ const getWebpackAssetsConfig = config => {
       ]
     },
     plugins: [
+      new webpack.DefinePlugin({
+        URL: JSON.stringify(config.url.toString())
+      }),
       new CleanWebpackPlugin(
         [`${assetOutputPath}/*.css`, `${assetOutputPath}/*.js`],
         {

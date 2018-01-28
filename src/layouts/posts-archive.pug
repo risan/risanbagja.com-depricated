@@ -19,3 +19,5 @@ html(lang='en')
           li.archive-item: a.archive-link(href= post.url)= post.title
 
       include includes/footer.pug
+
+    script(src=manifest['register-service-worker.js'] async)
