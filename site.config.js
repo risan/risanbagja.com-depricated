@@ -4,7 +4,7 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 module.exports = {
   // Site config
-  url: IS_PRODUCTION ? 'http://risanbagja.com' : 'http://localhost:8000',
+  url: IS_PRODUCTION ? 'https://risanbagja.com' : 'http://localhost:8000',
   title: 'Risan Bagja Pradana',
   siteDescription: 'Tutorials, coding practice, and software craftmanship',
   defaultMetaDescription:
