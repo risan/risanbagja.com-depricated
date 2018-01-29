@@ -97,5 +97,12 @@ module.exports = {
       'posts-archive-critical': 'scss/posts-archive-critical.scss',
       'post-critical': 'scss/post-critical.scss'
     }
+  },
+
+  // Third party services
+  services: {
+    google: {
+      siteVerificationId: 'mGMbTcE90HxLepCGg3_rBrUWvC6OPuXyTkxpGhTfr6o'
+    }
   }
 };
