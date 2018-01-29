@@ -41,3 +41,5 @@ html.no-js(lang='en')
 
     script(src='https://cdnjs.cloudflare.com/ajax/libs/lazysizes/4.0.1/lazysizes.min.js' async)
     script(src=manifest['register-service-worker.js'] async)
+    if config.isProduction
+      include includes/google-analytics.pug

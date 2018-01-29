@@ -4,6 +4,7 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 module.exports = {
   // Site config
+  isProduction: IS_PRODUCTION,
   url: IS_PRODUCTION ? 'https://risanbagja.com' : 'http://localhost:8000',
   title: 'Risan Bagja Pradana',
   siteDescription: 'Tutorials, coding practice, and software craftmanship',
@@ -101,8 +102,11 @@ module.exports = {
 
   // Third party services
   services: {
-    google: {
+    googleSearchConsole: {
       siteVerificationId: 'mGMbTcE90HxLepCGg3_rBrUWvC6OPuXyTkxpGhTfr6o'
+    },
+    googleAnalytics: {
+      trackingId: 'UA-27136969-11'
     }
   }
 };

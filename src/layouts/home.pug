@@ -6,3 +6,5 @@ html(lang='en')
   body
     div.container!= content
     script(src=manifest['register-service-worker.js'] async)
+    if config.isProduction
+      include includes/google-analytics.pug

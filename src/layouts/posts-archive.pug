@@ -21,3 +21,5 @@ html(lang='en')
       include includes/footer.pug
 
     script(src=manifest['register-service-worker.js'] async)
+    if config.isProduction
+      include includes/google-analytics.pug
