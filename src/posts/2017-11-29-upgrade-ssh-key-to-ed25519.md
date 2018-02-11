@@ -3,8 +3,8 @@ title: Upgrade Your SSH Key to Ed25519
 tags: server
 excerpt: When is the last time you created your SSH key? If you're still using RSA with key-size less than 2048 bits long, It's time for an upgrade!
 featuredImageSmall: https://images.unsplash.com/photo-1503792243040-7ce7f5f06085?w=500&q=80
-social_image:
-  filename: https://images.unsplash.com/photo-1503792243040-7ce7f5f06085?w=1200&q=80
+socialImage:
+  url: https://images.unsplash.com/photo-1503792243040-7ce7f5f06085?w=1200&q=80
   width: 1200
   height: 839
 ---
