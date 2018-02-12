@@ -158,14 +158,12 @@ The [`plugins`](https://eslint.org/docs/user-guide/configuring#configuring-plugi
 
 When you're using the [eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier), you no longer need to install the [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) package. Since we can get the same configuration from the plugin like so:
 
+If you want to disable the conflicting ESLint rules and combine both the `eslint` and `prettier` commands, you can simplify your configuration by extending the `plugin:prettier/recommended`. You no longer needs to specify the `plugins` and `rules` properties like so:
+
 ```js
 // .eslintrc
 module.exports = {
-  extends: ['plugin:prettier/recommended'],
-  plugins: ['prettier'],
-  rules: {
-    'prettier/prettier': 'error'
-  }
+  extends: ['plugin:prettier/recommended']
 };
 ```
 
