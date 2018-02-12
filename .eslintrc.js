@@ -1,8 +1,6 @@
 module.exports = {
-  extends: ['airbnb-base', 'prettier'],
-  plugins: ['prettier'],
+  extends: ['airbnb-base', 'plugin:prettier/recommended'],
   rules: {
-    'prettier/prettier': 'error',
     'no-console': 'off'
   },
   globals: {
