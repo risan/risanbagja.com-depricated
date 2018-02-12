@@ -7,7 +7,7 @@ module.exports = {
   isProduction: IS_PRODUCTION,
   url: IS_PRODUCTION ? 'https://risanbagja.com' : 'http://localhost:8000',
   title: 'Risan Bagja Pradana',
-  siteDescription: 'Tutorials, coding practice, and software craftmanship',
+  siteDescription: 'Tutorials, coding practice, and software craftsmanship',
   defaultMetaDescription:
     'Risan Bagja Pradana is an experienced Javascript and PHP developer',
 
