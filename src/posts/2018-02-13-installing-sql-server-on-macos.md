@@ -82,7 +82,7 @@ $ docker rm -f awesome
 $ docker rmi microsoft/mssql-server-linux:2017-latest
 ```
 
-It's a bit inconvenience to run the `sqlcmd` from within the container in order to work with the database. Luckily there are some tools that you can for interfacing with SQL Server:
+It's a bit inconvenience to run the `sqlcmd` from within the container in order to work with the database. Luckily there are some tools that you can use for interfacing with SQL Server:
 
 - [TablePlus](https://tableplus.io/): This is my favorite one. A native macOS application that works not only with MySQL and SQL Server databases but also Postgres and Redis!
 - [SQL Operations Studio](https://docs.microsoft.com/en-us/sql/sql-operations-studio/download): This one is coming from Microsoft and can be run on Windows, macOS or Linux.
