@@ -4,7 +4,7 @@ html(lang='en')
     include includes/head.pug
     style: include includes/home-critical.css
   body
-    div.container!= content
+    article.container!= content
     script(src=manifest['register-service-worker.js'] async)
     if config.isProduction
       include includes/google-analytics.pug
